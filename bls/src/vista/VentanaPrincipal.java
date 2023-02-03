@@ -28,10 +28,11 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import modelo.DateLabelFormatter;
+import modelo.Entradas;
 
 import javax.swing.SwingConstants;
 
-public class vetnan extends JFrame {
+public class VentanaPrincipal extends JFrame {
 
 	/**
 	 * 
@@ -51,6 +52,9 @@ public class vetnan extends JFrame {
 	private JButton btnfinalizarCompra;
 	private JButton btnAceptarhora;
 
+	private Entradas[] array1 = new Entradas[8];
+	private String pelicula;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -60,7 +64,7 @@ public class vetnan extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vetnan frame = new vetnan();
+					VentanaPrincipal frame = new VentanaPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,7 +76,7 @@ public class vetnan extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public vetnan() {
+	public VentanaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -115,7 +119,7 @@ public class vetnan extends JFrame {
 
 		// ------------------------------------------------//
 		comboBox_1 = new JComboBox<String>();
-		comboBox_1.setBounds(36, 108, 67, 22);
+		comboBox_1.setBounds(36, 108, 140, 22);
 
 		lblPelicula = new JLabel("New label");
 		lblPelicula.setBounds(45, 47, 346, 45);
@@ -192,8 +196,9 @@ public class vetnan extends JFrame {
 					ResultSet resul = sentencia.executeQuery(sql);
 					while (resul.next()) {
 						comboBox_1.addItem(resul.getString("nombrePelicula"));
+						
 					}
-
+					
 					conexion.close();
 				} catch (SQLException ex) {
 					setTitle(ex.toString());
@@ -203,6 +208,8 @@ public class vetnan extends JFrame {
 		});
 		btnAceptar.setBounds(249, 133, 89, 23);
 		panelCines.add(btnAceptar);
+		
+
 		
 		btnfinalizarCompra = new JButton("Finalizar Compra");
 		btnfinalizarCompra.addActionListener(new ActionListener() {
@@ -249,6 +256,10 @@ public class vetnan extends JFrame {
 				panelSesion.setVisible(true);
 				panelPeliculas.setVisible(false);
 				Connection conexion;
+				
+				pelicula = (String) comboBox_1.getSelectedItem();
+				System.out.println(pelicula);
+				
 				lblPeliculaselec.setText("Pelicula seleccionada " + comboBox_1.getSelectedItem());
 				try {
 
@@ -389,6 +400,16 @@ public class vetnan extends JFrame {
 		});
 		btnAceptarhora.setBounds(260, 130, 150, 23);
 		panelSesion.add(btnAceptarhora);
+		
+		JPanel panelResumen = new JPanel();
+		panelResumen.setBounds(0, 0, 10, 10);
+		contentPane.add(panelResumen);
+		panelResumen.setLayout(null);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(0, 0, 89, 23);
+		panelResumen.add(btnNewButton);
+	//	Entradas et = new Entradas(pelicula,);
 		
 	}
 }
