@@ -1,100 +1,22 @@
 package modelo;
 
-import java.util.Date;
 
 public class Entradas {
 	private int id_entrada;
-	private int id_sesion;
-	private String nombreCines;
-	private String nombreSalas;
-	private Hora hora;
-	private Date fecha;
-	private String nombrePelicula;
-	private int duracion;
-	private float precio;
-	private String genero;
+	private Sesiones []id_sesion;
+	private Peliculas []peliculas;
+	private Cliente []cliente;
+	private Cines []cines;
 	
-	public Entradas( int id_entrada ,int id_sesion ) {
-		this.id_entrada = id_entrada;
-		this.id_sesion = id_sesion;
-	/*	this.nombreCines = nombreCines;
-		this.nombreSalas = nombreSalas;
-		this.hora = hora;
-		this.fecha = fecha;
-		this.nombrePelicula = nombrePelicula;
-		this.duracion = duracion;
-		this.precio = precio;
-		this.genero = genero;*/
+
+
+	public Entradas(int id_entrada,Sesiones[] id_sesion,Peliculas[] peliculas,Cliente[] cliente,Cines []cines) {
+		this.id_entrada=id_entrada;
+		this.id_sesion=id_sesion;
+		this.peliculas = peliculas;
+		this.cliente = cliente;
+		this.cines = cines;
 	}
-/*	
-	public String getNombreCines() {
-		return nombreCines;
-	}
-
-	public void setNombreCines(String nombreCines) {
-		this.nombreCines = nombreCines;
-	}
-
-	public String getNombreSalas() {
-		return nombreSalas;
-	}
-
-	public void setNombreSalas(String nombreSalas) {
-		this.nombreSalas = nombreSalas;
-	}
-
-	public Hora getHora() {
-		return hora;
-	}
-
-	public void setHora(Hora hora) {
-		this.hora = hora;
-	}
-
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-
-	public String getNombrePelicula() {
-		return nombrePelicula;
-	}
-
-	public void setNombrePelicula(String nombrePelicula) {
-		this.nombrePelicula = nombrePelicula;
-	}
-
-	public int getDuracion() {
-		return duracion;
-	}
-
-	public void setDuracion(int duracion) {
-		this.duracion = duracion;
-	}
-
-	public float getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(float precio) {
-		this.precio = precio;
-	}
-
-	public String getGenero() {
-		return genero;
-	}
-
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
-
-*/
-
-
-	
 
 
 	public int getId_entrada() {
@@ -104,20 +26,45 @@ public class Entradas {
 	public void setId_entrada(int id_entrada) {
 		this.id_entrada = id_entrada;
 	}
-
-	public int getId_sesion() {
+	
+	public Sesiones[] getId_sesion() {
 		return id_sesion;
 	}
 
-	public void setId_sesion(int id_sesion) {
+	public void setId_sesion(Sesiones[] id_sesion) {
 		this.id_sesion = id_sesion;
 	}
-
-	@Override
-	public String toString() {
-		return "id_entrada=" + id_entrada + ", id_sesion=" + id_sesion ;
+	public Peliculas []getPeliculas() {
+		return peliculas;
 	}
 
+	public void setPeliculas(Peliculas []peliculas) {
+		this.peliculas = peliculas;
+	}
+
+	public Cliente[] getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente[] cliente) {
+		this.cliente = cliente;
+	}
+
+	public Cines[] getCines() {
+		return cines;
+	}
+
+	public void setCines(Cines[] cines) {
+		this.cines = cines;
+	}
+
+
+
+	
+	@Override
+	public String toString() {
+		return "Entradas [id_entrada=" + id_entrada + "]";
+	}
 
 
 	@Override
@@ -131,5 +78,5 @@ public class Entradas {
 		Entradas other = (Entradas) obj;
 		return id_entrada == other.id_entrada;
 	}
-	
+
 }

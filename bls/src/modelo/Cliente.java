@@ -8,16 +8,16 @@ public class Cliente {
 	private String nombre;
 	private String apellido;
 	private char sexo;
-	private String contraseña;
+	private String contrasenya;
 
-	public Cliente(int id_cliente, String dni, String nombre, String apellido, char sexo, String contraseña) {
+
+	public Cliente(int id_cliente, String dni, String nombre, String apellido, char sexo, String contrasenya) {
 		this.id_cliente = id_cliente;
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.sexo = sexo;
-		this.contraseña = contraseña;
-
+		this.contrasenya = contrasenya;
 	}
 
 	public int getId_cliente() {
@@ -61,17 +61,18 @@ public class Cliente {
 	}
 
 	public String getContraseña() {
-		return contraseña;
+		return contrasenya;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContraseña(String contrasenya) {
+		this.contrasenya = contrasenya;
 	}
+
 
 	@Override
 	public String toString() {
 		return "id_cliente=" + id_cliente + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", sexo="
-				+ sexo + ", contraseña=" + contraseña ;
+				+ sexo + ", contraseña=" + contrasenya ;
 	}
 
 
@@ -87,5 +88,4 @@ public class Cliente {
 		return Objects.equals(dni, other.dni);
 	}
 	
-
 }

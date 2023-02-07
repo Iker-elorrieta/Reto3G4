@@ -3,12 +3,12 @@ package modelo;
 public class Cines {
 	private int id_cine;
 	private String nombreCine;
-	private int num_salas;
-	
-	public Cines(int id_cine,String nombreCine,int num_salas) {
+	private Salas[] id_sala;
+
+	public Cines(int id_cine,String nombreCine,Salas[] id_sala) {
 		this.id_cine = id_cine;
 		this.nombreCine = nombreCine;
-		this.num_salas = num_salas;
+		this.id_sala = id_sala;
 	}
 
 	public int getId_cine() {
@@ -27,19 +27,19 @@ public class Cines {
 		this.nombreCine = nombreCine;
 	}
 
-	public int getNum_salas() {
-		return num_salas;
+	public Salas[] getId_sala() {
+		return id_sala;
 	}
 
-	public void setNum_salas(int num_salas) {
-		this.num_salas = num_salas;
+	public void setId_sala(Salas[] id_sala) {
+		this.id_sala = id_sala;
 	}
 
 	@Override
 	public String toString() {
-		return "id_cine=" + id_cine + ", nombre del Cine=" + nombreCine + ", numero de salas=" + num_salas ;
+		return "id_cine=" + id_cine + ", nombre del Cine=" + nombreCine + ", id_sala=" + id_sala ;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -50,6 +50,5 @@ public class Cines {
 			return false;
 		Cines other = (Cines) obj;
 		return id_cine == other.id_cine;
-	}
-	
+	}	
 }

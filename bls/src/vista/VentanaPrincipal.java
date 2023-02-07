@@ -189,9 +189,9 @@ public class VentanaPrincipal extends JFrame {
 					Statement sentencia = conexion.createStatement();
 					
 					int num = comboBox.getSelectedIndex() + 1;
-					String sql = "select * from Cines join Salas on Cines.id_cine=Salas.id_cine "
+					String sql = "select distinct nombrePelicula from Cines join Salas on Cines.id_cine=Salas.id_cine "
 							+ " join Sesiones on Sesiones.id_sesion=Salas.id_sala join Peliculas on  "
-							+ " Peliculas.id_pelicula=Sesiones.id_pelicula where cines.id_cine = " + " '" + num + "'";
+							+ " Peliculas.id_pelicula=Sesiones.id_pelicula where cines.id_cine = " + " '" + num + "'" + "order by nombrePelicula";
 
 					ResultSet resul = sentencia.executeQuery(sql);
 					while (resul.next()) {

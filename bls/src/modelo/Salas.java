@@ -1,18 +1,22 @@
 package modelo;
 
-
+import java.sql.Date;
+import java.util.Arrays;
 
 public class Salas {
 	private int id_sala;
 	private String nombreSalas;
-	private int id_cine;
+	private int num_salas;
+	private Date fecha;
+	private Date hora;
+	private Peliculas [] id_pelicula;
 	
-	public Salas(int id_sala,String nombreSalas,int id_cine) {
+	public Salas(int id_sala,String nombreSalas,int num_salas, Date fecha,Date hora,Peliculas []id_pelicula) {
 		this.id_sala = id_sala;
 		this.nombreSalas = nombreSalas;
-		this.id_cine = id_cine;
+		this.num_salas=num_salas;
 	}
-
+	
 	public int getId_sala() {
 		return id_sala;
 	}
@@ -21,6 +25,7 @@ public class Salas {
 		this.id_sala = id_sala;
 	}
 
+	
 	public String getNombreSalas() {
 		return nombreSalas;
 	}
@@ -29,19 +34,12 @@ public class Salas {
 		this.nombreSalas = nombreSalas;
 	}
 
-	public int getId_cine() {
-		return id_cine;
-	}
-
-	public void setId_cine(int id_cine) {
-		this.id_cine = id_cine;
-	}
-
+	
 	@Override
 	public String toString() {
-		return "id_sala=" + id_sala + ", nombre de la Sala = " + nombreSalas;
+		return "Salas [id_sala=" + id_sala + ", nombreSalas=" + nombreSalas + ", num_salas=" + num_salas + ", fecha="
+				+ fecha + ", hora=" + hora + ", id_pelicula=" + Arrays.toString(id_pelicula) + "]";
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -53,6 +51,37 @@ public class Salas {
 			return false;
 		Salas other = (Salas) obj;
 		return id_sala == other.id_sala;
+	}
+
+	public int getNum_salas() {
+		return num_salas;
+	}
+
+	public void setNum_salas(int num_salas) {
+		this.num_salas = num_salas;
+	}
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Date getHora() {
+		return hora;
+	}
+
+	public void setHora(Date hora) {
+		this.hora = hora;
+	}
+
+	public Peliculas[] getId_pelicula() {
+		return id_pelicula;
+	}
+
+	public void setId_pelicula(Peliculas[] id_pelicula) {
+		this.id_pelicula = id_pelicula;
 	}
 
 }
