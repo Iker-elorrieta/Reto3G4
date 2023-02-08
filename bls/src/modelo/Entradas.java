@@ -1,21 +1,17 @@
 package modelo;
 
+import java.util.Arrays;
 
 public class Entradas {
 	private int id_entrada;
-	private Sesiones []id_sesion;
 	private Peliculas []peliculas;
-	private Cliente []cliente;
-	private Cines []cines;
+	private Cliente cliente;
 	
-
-
-	public Entradas(int id_entrada,Sesiones[] id_sesion,Peliculas[] peliculas,Cliente[] cliente,Cines []cines) {
+	
+	public Entradas(int id_entrada,Peliculas[] peliculas,Cliente cliente) {
 		this.id_entrada=id_entrada;
-		this.id_sesion=id_sesion;
 		this.peliculas = peliculas;
 		this.cliente = cliente;
-		this.cines = cines;
 	}
 
 
@@ -27,13 +23,7 @@ public class Entradas {
 		this.id_entrada = id_entrada;
 	}
 	
-	public Sesiones[] getId_sesion() {
-		return id_sesion;
-	}
 
-	public void setId_sesion(Sesiones[] id_sesion) {
-		this.id_sesion = id_sesion;
-	}
 	public Peliculas []getPeliculas() {
 		return peliculas;
 	}
@@ -42,28 +32,20 @@ public class Entradas {
 		this.peliculas = peliculas;
 	}
 
-	public Cliente[] getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(Cliente[] cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
-	public Cines[] getCines() {
-		return cines;
-	}
-
-	public void setCines(Cines[] cines) {
-		this.cines = cines;
-	}
 
 
-
-	
 	@Override
 	public String toString() {
-		return "Entradas [id_entrada=" + id_entrada + "]";
+		return "Entradas [id_entrada=" + id_entrada + ", peliculas=" + Arrays.toString(peliculas) + ", cliente="
+				+ cliente + "]";
 	}
 
 

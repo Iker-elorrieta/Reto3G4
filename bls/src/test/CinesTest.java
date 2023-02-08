@@ -1,9 +1,8 @@
 package test;
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.sql.Date;
 
 import org.junit.jupiter.api.Test;
 import modelo.Cines;
@@ -14,10 +13,8 @@ class CinesTest {
 	int id_sala = 9;
 	String nombreSalas = "sala1";
 	int num_salas = 3;
-	Date fecha;
-	Date hora;
-	Peliculas[] id_pelicula;
-	Salas sala = new Salas(id_sala, nombreSalas, num_salas, fecha, hora, id_pelicula);
+	Peliculas[] arrayPeliculas;
+	Salas sala = new Salas(id_sala, nombreSalas, num_salas, arrayPeliculas);
 	int id_cine = 1;
 	int id_cine0 = 0;
 	String nombreCine = "elorrieta";
@@ -35,8 +32,7 @@ class CinesTest {
 		assertEquals(cine.getId_cine(), id_cine);
 		assertTrue(cine.getId_sala().equals(FK_id_sala));
 		assertEquals(cine.getNombreCine(), nombreCine);
-		assertEquals(cine.toString(),
-				"id_cine=" + id_cine + ", nombre del Cine=" + nombreCine + ", id_sala=" + FK_id_sala);
+		assertEquals(cine.toString(), "id_cine=" + id_cine + ", nombre del Cine=" + nombreCine + ", id_sala=" + FK_id_sala);
 		assertTrue(cine.equals(cine1));
 		assertFalse(cine.equals(cine2));
 		assertTrue(cine.equals(cine));

@@ -1,45 +1,33 @@
 package modelo;
 
 import java.sql.Date;
-
+import java.util.Arrays;
 
 public class Sesiones {
 	private int id_sesion;
 	private Date fecha;
 	private Date hora;
-	private Peliculas pelicula;
-	private Salas salas;
-	public Sesiones( int id_sesion,Date fecha,Date hora,Peliculas pelicula,Salas salas) {
+	private Peliculas[] arrayPelicula;
+	private Cines[] arrayCine;
+
+
+	public Sesiones( int id_sesion,Date fecha,Date hora,Peliculas[] arrayPelicula,Cines[] arrayCine) {
 		this.id_sesion=id_sesion;
 		this.fecha=fecha;
 		this.hora=hora;
-		this.pelicula=pelicula;
-		this.salas=salas;
+		this.arrayPelicula=arrayPelicula;
+		this.arrayCine=arrayCine;
+
 	};
 	
 
-
-
-	@Override
-	public String toString() {
-		return "Sesiones [id_sesion=" + id_sesion + "]";
+	public Peliculas[] getPelicula() {
+		return arrayPelicula;
+	}
+	public void setPelicula(Peliculas[] arrayPelicula) {
+		this.arrayPelicula = arrayPelicula;
 	}
 
-
-
-
-	public Peliculas getPelicula() {
-		return pelicula;
-	}
-	public void setPelicula(Peliculas pelicula) {
-		this.pelicula = pelicula;
-	}
-	public Salas getSalas() {
-		return salas;
-	}
-	public void setSalas(Salas salas) {
-		this.salas = salas;
-	}
 	public int getId_sesion() {
 		return id_sesion;
 	}
@@ -70,6 +58,23 @@ public class Sesiones {
 			return false;
 		Sesiones other = (Sesiones) obj;
 		return id_sesion == other.id_sesion;
+	}
+
+
+	public Cines[] getArrayCine() {
+		return arrayCine;
+	}
+
+
+	public void setArrayCine(Cines[] arrayCine) {
+		this.arrayCine = arrayCine;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Sesiones [id_sesion=" + id_sesion + ", fecha=" + fecha + ", hora=" + hora + ", arrayPelicula="
+				+ Arrays.toString(arrayPelicula) + ", arrayCine=" + Arrays.toString(arrayCine) + "]";
 	}
 	
 
