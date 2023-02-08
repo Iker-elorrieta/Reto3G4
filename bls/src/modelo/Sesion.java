@@ -6,14 +6,13 @@ import java.util.Arrays;
 public class Sesion {
 	private int id_sesion;
 	private Date fecha;
-	private Date hora;
+
 	private Pelicula pelicula;
 
 
-	public Sesion( int id_sesion,Date fecha,Date hora,Pelicula pelicula) {
+	public Sesion( int id_sesion,Date fecha,Pelicula pelicula) {
 		this.id_sesion=id_sesion;
 		this.fecha=fecha;
-		this.hora=hora;
 		this.pelicula=pelicula;
 	};
 
@@ -31,12 +30,7 @@ public class Sesion {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	public Date getHora() {
-		return hora;
-	}
-	public void setHora(Date hora) {
-		this.hora = hora;
-	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -66,7 +60,7 @@ public class Sesion {
 
 	@Override
 	public String toString() {
-		return "Sesiones [id_sesion=" + id_sesion + ", fecha=" + fecha + ", hora=" + hora + ", pelicula=" + pelicula
+		return "Sesiones [id_sesion=" + id_sesion + ", fecha=" + fecha + ", pelicula=" + pelicula
 				+ "]";
 	}
 	

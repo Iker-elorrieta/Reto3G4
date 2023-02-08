@@ -27,16 +27,14 @@ class CinesTest {
 	int id_sesion = 0;
 	int id_sesion0 = 1;
 	Date fecha;
-	Date hora;
-	Sesion sesiones = new Sesion(id_sesion, fecha, hora, peliculas);
+	Sesion sesiones = new Sesion(id_sesion, fecha, peliculas);
 
 	int id_sala = 9;
 	String nombreSalas = "sala1";
-	int num_salas = 3;
 
 	Sesion[] arraySesiones = {sesiones};
 
-	Sala sala = new Sala(id_sala, nombreSalas, num_salas, arraySesiones);
+	Sala sala = new Sala(id_sala, nombreSalas, arraySesiones);
 	int id_cine = 1;
 	int id_cine0 = 0;
 	String nombreCine = "elorrieta";
@@ -47,6 +45,7 @@ class CinesTest {
 	Cine cine2 = null;
 	Cine cine3 = new Cine(id_cine0, nombreCine, arraySalas);
 	@Test
+	
 	void test() {
 		cine.setId_cine(id_cine);
 		cine.setId_sala(arraySalas);

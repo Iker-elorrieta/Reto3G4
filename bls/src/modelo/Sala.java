@@ -5,13 +5,11 @@ import java.util.Arrays;
 public class Sala {
 	private int id_sala;
 	private String nombreSalas;
-	private int num_salas;
 	private Sesion[] arraySesiones;
 	
-	public Sala(int id_sala,String nombreSalas,int num_salas, Sesion[] arraySesiones) {
+	public Sala(int id_sala,String nombreSalas, Sesion[] arraySesiones) {
 		this.id_sala = id_sala;
 		this.nombreSalas = nombreSalas;
-		this.num_salas=num_salas;
 		this.arraySesiones=arraySesiones;
 	}
 	
@@ -45,13 +43,6 @@ public class Sala {
 		return id_sala == other.id_sala;
 	}
 
-	public int getNum_salas() {
-		return num_salas;
-	}
-
-	public void setNum_salas(int num_salas) {
-		this.num_salas = num_salas;
-	}
 
 	public Sesion[] getArraySesiones() {
 		return arraySesiones;
@@ -63,8 +54,7 @@ public class Sala {
 
 	@Override
 	public String toString() {
-		return "Salas [id_sala=" + id_sala + ", nombreSalas=" + nombreSalas + ", num_salas=" + num_salas
-				+ ", arraySesiones=" + Arrays.toString(arraySesiones) + "]";
+		return "Salas [id_sala=" + id_sala + ", nombreSalas=" + nombreSalas +  ", arraySesiones=" + Arrays.toString(arraySesiones) + "]";
 	}
 	
 

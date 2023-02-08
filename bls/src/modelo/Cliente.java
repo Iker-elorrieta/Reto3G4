@@ -3,15 +3,13 @@ package modelo;
 import java.util.Objects;
 
 public class Cliente {
-	private int id_cliente;
 	private String dni;
 	private String nombre;
 	private String apellido;
 	private char sexo;
 	private String contrasenya;
 
-	public Cliente(int id_cliente, String dni, String nombre, String apellido, char sexo, String contrasenya) {
-		this.id_cliente = id_cliente;
+	public Cliente( String dni, String nombre, String apellido, char sexo, String contrasenya) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -19,13 +17,7 @@ public class Cliente {
 		this.contrasenya = contrasenya;
 	}
 
-	public int getId_cliente() {
-		return id_cliente;
-	}
 
-	public void setId_cliente(int id_cliente) {
-		this.id_cliente = id_cliente;
-	}
 
 	public String getDni() {
 		return dni;
@@ -68,11 +60,15 @@ public class Cliente {
 	}
 
 
+
+
+
 	@Override
 	public String toString() {
-		return "id_cliente=" + id_cliente + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", sexo="
-				+ sexo + ", contraseña=" + contrasenya ;
+		return "Cliente [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", sexo=" + sexo
+				+ ", contrasenya=" + contrasenya + "]";
 	}
+
 
 
 	@Override

@@ -14,15 +14,14 @@ import modelo.Sesion;
 class EntradasTest {
 	int id_entrada = 0;
 	int id_entrada0 = 1;
+	float precioTotal;
 
-	int id_cliente = 1;
-	int id_cliente0 = 0;
 	String dni = "21";
 	String nombre = "1";
 	String apellido = "21";
 	char sexo = 'h';
 	String contrasenya = "12";
-	Cliente cliente = new Cliente(id_cliente, dni, nombre, apellido, sexo, contrasenya);
+	Cliente cliente = new Cliente( dni, nombre, apellido, sexo, contrasenya);
 	
 	int id_pelicula = 2;
 	int id_pelicula0 = 1;
@@ -36,30 +35,32 @@ class EntradasTest {
 	int id_sesion = 0;
 	int id_sesion0 = 1;
 	Date fecha;
-	Date hora;
-	Sesion sesiones = new Sesion(id_sesion, fecha, hora, peliculas);
+	Sesion sesiones = new Sesion(id_sesion, fecha, peliculas);
 	Sesion [] arraySesiones= {sesiones};
 
-	Entrada entradas = new Entrada(id_entrada,cliente, arraySesiones);
-	Entrada entradas1 = new Entrada(id_entrada, cliente, arraySesiones);
+	Entrada entradas = new Entrada(id_entrada,cliente, arraySesiones,precioTotal);
+	Entrada entradas1 = new Entrada(id_entrada, cliente, arraySesiones,precioTotal);
 	Entrada entradas2 = null;
-	Entrada entradas3 = new Entrada(id_entrada0, cliente, arraySesiones);
+	Entrada entradas3 = new Entrada(id_entrada0, cliente, arraySesiones,precioTotal);
 	@Test
+
 	void test() {
 		entradas.setCliente(cliente);
 		entradas.setId_entrada(id_entrada);
 		entradas.setSesiones(arraySesiones);
+		entradas.setPrecioTotal(precioTotal);
 		assertEquals(entradas.getId_entrada(), id_entrada);
 		assertTrue(entradas.getSesiones().equals(arraySesiones));
 		assertTrue(entradas.getCliente().equals(cliente));
+		assertEquals(entradas.getPrecioTotal(), precioTotal,1.1f);
 
 		assertTrue(entradas.equals(entradas1));
 		assertFalse(entradas.equals(entradas2));
 		assertTrue(entradas.equals(entradas));
 		assertFalse(entradas.equals(entradas3));
 		assertFalse(entradas.equals(entradas.getClass()));
-		assertEquals(entradas.toString(), "Entradas [id_entrada=" + id_entrada + ", cliente=" + cliente + ", sesiones=" + Arrays.toString(arraySesiones)
-		+ "]");
+		assertEquals(entradas.toString(),"Entrada [id_entrada=" + id_entrada + ", cliente=" + cliente + ", arraySesiones="
+				+ Arrays.toString(arraySesiones) + ", precioTotal=" + precioTotal + "]");
 	}
-
+	
 }

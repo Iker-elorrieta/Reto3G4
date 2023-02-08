@@ -6,11 +6,13 @@ public class Entrada {
 	private int id_entrada;
 	private Cliente cliente;
 	private Sesion [] arraySesiones;
+	private float precioTotal;
 	
-	public Entrada(int id_entrada,Cliente cliente,Sesion [] arraySesiones) {
+	public Entrada(int id_entrada,Cliente cliente,Sesion [] arraySesiones,float precioTotal) {
 		this.id_entrada=id_entrada;
 		this.cliente = cliente;
 		this.arraySesiones=arraySesiones;
+		this.precioTotal=precioTotal;
 	}
 
 	public int getId_entrada() {
@@ -31,10 +33,11 @@ public class Entrada {
 	}
 
 
+
 	@Override
 	public String toString() {
-		return "Entradas [id_entrada=" + id_entrada + ", cliente=" + cliente + ", sesiones=" + Arrays.toString(arraySesiones)
-				+ "]";
+		return "Entrada [id_entrada=" + id_entrada + ", cliente=" + cliente + ", arraySesiones="
+				+ Arrays.toString(arraySesiones) + ", precioTotal=" + precioTotal + "]";
 	}
 
 	@Override
@@ -55,6 +58,14 @@ public class Entrada {
 
 	public void setSesiones(Sesion [] arraySesiones) {
 		this.arraySesiones = arraySesiones;
+	}
+
+	public float getPrecioTotal() {
+		return precioTotal;
+	}
+
+	public void setPrecioTotal(float precioTotal) {
+		this.precioTotal = precioTotal;
 	}
 
 }
