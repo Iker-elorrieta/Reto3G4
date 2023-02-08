@@ -10,7 +10,6 @@ public class Cliente {
 	private char sexo;
 	private String contrasenya;
 
-
 	public Cliente(int id_cliente, String dni, String nombre, String apellido, char sexo, String contrasenya) {
 		this.id_cliente = id_cliente;
 		this.dni = dni;
@@ -60,11 +59,11 @@ public class Cliente {
 		this.sexo = sexo;
 	}
 
-	public String getContraseña() {
+	public String getContrasenya() {
 		return contrasenya;
 	}
 
-	public void setContraseña(String contrasenya) {
+	public void setContrasenya(String contrasenya) {
 		this.contrasenya = contrasenya;
 	}
 

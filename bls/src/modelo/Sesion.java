@@ -3,30 +3,20 @@ package modelo;
 import java.sql.Date;
 import java.util.Arrays;
 
-public class Sesiones {
+public class Sesion {
 	private int id_sesion;
 	private Date fecha;
 	private Date hora;
-	private Peliculas[] arrayPelicula;
-	private Cines[] arrayCine;
+	private Pelicula pelicula;
 
 
-	public Sesiones( int id_sesion,Date fecha,Date hora,Peliculas[] arrayPelicula,Cines[] arrayCine) {
+	public Sesion( int id_sesion,Date fecha,Date hora,Pelicula pelicula) {
 		this.id_sesion=id_sesion;
 		this.fecha=fecha;
 		this.hora=hora;
-		this.arrayPelicula=arrayPelicula;
-		this.arrayCine=arrayCine;
-
+		this.pelicula=pelicula;
 	};
-	
 
-	public Peliculas[] getPelicula() {
-		return arrayPelicula;
-	}
-	public void setPelicula(Peliculas[] arrayPelicula) {
-		this.arrayPelicula = arrayPelicula;
-	}
 
 	public int getId_sesion() {
 		return id_sesion;
@@ -56,25 +46,28 @@ public class Sesiones {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Sesiones other = (Sesiones) obj;
+		Sesion other = (Sesion) obj;
 		return id_sesion == other.id_sesion;
 	}
 
 
-	public Cines[] getArrayCine() {
-		return arrayCine;
+
+	public Pelicula getPelicula() {
+		return pelicula;
 	}
 
 
-	public void setArrayCine(Cines[] arrayCine) {
-		this.arrayCine = arrayCine;
+
+	public void setPelicula(Pelicula pelicula) {
+		this.pelicula = pelicula;
 	}
+
 
 
 	@Override
 	public String toString() {
-		return "Sesiones [id_sesion=" + id_sesion + ", fecha=" + fecha + ", hora=" + hora + ", arrayPelicula="
-				+ Arrays.toString(arrayPelicula) + ", arrayCine=" + Arrays.toString(arrayCine) + "]";
+		return "Sesiones [id_sesion=" + id_sesion + ", fecha=" + fecha + ", hora=" + hora + ", pelicula=" + pelicula
+				+ "]";
 	}
 	
 

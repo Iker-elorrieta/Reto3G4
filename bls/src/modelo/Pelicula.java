@@ -1,14 +1,14 @@
 package modelo;
 
 
-public class Peliculas {
+public class Pelicula {
 	private int id_pelicula;
 	private String nombrePelicula;
 	private float precio;
 	private int duracion;
 	private String genero;
 
-	public Peliculas(int id_pelicula, String nombrePelicula, float precio, int duracion, String genero) {
+	public Pelicula(int id_pelicula, String nombrePelicula, float precio, int duracion, String genero) {
 		this.id_pelicula = id_pelicula;
 		this.nombrePelicula = nombrePelicula;
 		this.precio = precio;
@@ -71,7 +71,7 @@ public class Peliculas {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Peliculas other = (Peliculas) obj;
+		Pelicula other = (Pelicula) obj;
 		return id_pelicula == other.id_pelicula;
 	}
 

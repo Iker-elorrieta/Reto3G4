@@ -24,7 +24,7 @@ class ClienteTest {
 	@Test
 	void test() {
 		cliente.setApellido(apellido);
-		cliente.setContraseña(contrasenya);
+		cliente.setContrasenya(contrasenya);
 		cliente.setDni(dni);
 		cliente.setId_cliente(id_cliente);
 		cliente.setSexo(sexo);
@@ -33,7 +33,7 @@ class ClienteTest {
 		assertEquals(cliente.getDni(),dni);
 		assertEquals(cliente.getId_cliente(),id_cliente);
 
-		assertEquals(cliente.getContraseña(),contrasenya);
+		assertEquals(cliente.getContrasenya(),contrasenya);
 		assertEquals(cliente.getNombre(),nombre);
 		assertEquals(cliente.getSexo(),sexo);
 		assertEquals(cliente.toString(),"id_cliente=" + id_cliente + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", sexo="

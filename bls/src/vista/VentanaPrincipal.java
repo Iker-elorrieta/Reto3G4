@@ -3,6 +3,7 @@ package vista;
 import java.awt.Color;
 
 
+
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -27,8 +28,8 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import modelo.DateLabelFormatter;
-import modelo.Entradas;
+
+import modelo.Entrada;
 
 import javax.swing.SwingConstants;
 
@@ -52,7 +53,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnfinalizarCompra;
 	private JButton btnAceptarhora;
 
-	private Entradas[] array1 = new Entradas[8];
+	private Entrada[] array1 = new Entrada[8];
 	private String pelicula;
 	
 	/**
@@ -104,11 +105,7 @@ public class VentanaPrincipal extends JFrame {
 		JLabel lblPeliculaselec = new JLabel("New label");
 		lblPeliculaselec.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPeliculaselec.setBounds(40, 11, 350, 25);
-		UtilDateModel model = new UtilDateModel();
-		// model.setDate(2022, 5, 6);
-		Properties p = new Properties();
-		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+	
 		contentPane.setLayout(null);
 
 		datePicker.setBounds(10, 90, 202, 23);

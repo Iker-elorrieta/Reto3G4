@@ -2,18 +2,16 @@ package modelo;
 
 import java.util.Arrays;
 
-public class Entradas {
+public class Entrada {
 	private int id_entrada;
-	private Peliculas []peliculas;
 	private Cliente cliente;
+	private Sesion [] arraySesiones;
 	
-	
-	public Entradas(int id_entrada,Peliculas[] peliculas,Cliente cliente) {
+	public Entrada(int id_entrada,Cliente cliente,Sesion [] arraySesiones) {
 		this.id_entrada=id_entrada;
-		this.peliculas = peliculas;
 		this.cliente = cliente;
+		this.arraySesiones=arraySesiones;
 	}
-
 
 	public int getId_entrada() {
 		return id_entrada;
@@ -24,14 +22,6 @@ public class Entradas {
 	}
 	
 
-	public Peliculas []getPeliculas() {
-		return peliculas;
-	}
-
-	public void setPeliculas(Peliculas []peliculas) {
-		this.peliculas = peliculas;
-	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -41,13 +31,11 @@ public class Entradas {
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "Entradas [id_entrada=" + id_entrada + ", peliculas=" + Arrays.toString(peliculas) + ", cliente="
-				+ cliente + "]";
+		return "Entradas [id_entrada=" + id_entrada + ", cliente=" + cliente + ", sesiones=" + Arrays.toString(arraySesiones)
+				+ "]";
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -57,8 +45,16 @@ public class Entradas {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Entradas other = (Entradas) obj;
+		Entrada other = (Entrada) obj;
 		return id_entrada == other.id_entrada;
+	}
+
+	public Sesion [] getSesiones() {
+		return arraySesiones;
+	}
+
+	public void setSesiones(Sesion [] arraySesiones) {
+		this.arraySesiones = arraySesiones;
 	}
 
 }

@@ -2,17 +2,17 @@ package modelo;
 
 import java.util.Arrays;
 
-public class Salas {
+public class Sala {
 	private int id_sala;
 	private String nombreSalas;
 	private int num_salas;
-	private Peliculas [] arrayPeliculas;
+	private Sesion[] arraySesiones;
 	
-	public Salas(int id_sala,String nombreSalas,int num_salas,Peliculas []arrayPeliculas) {
+	public Sala(int id_sala,String nombreSalas,int num_salas, Sesion[] arraySesiones) {
 		this.id_sala = id_sala;
 		this.nombreSalas = nombreSalas;
 		this.num_salas=num_salas;
-		this.arrayPeliculas=arrayPeliculas;
+		this.arraySesiones=arraySesiones;
 	}
 	
 	public int getId_sala() {
@@ -32,11 +32,6 @@ public class Salas {
 		this.nombreSalas = nombreSalas;
 	}
 
-	
-	@Override
-	public String toString() {
-		return "Salas [id_sala=" + id_sala + ", nombreSalas=" + nombreSalas + ", num_salas=" + num_salas + ", id_pelicula=" + Arrays.toString(arrayPeliculas) + "]";
-	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -46,7 +41,7 @@ public class Salas {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Salas other = (Salas) obj;
+		Sala other = (Sala) obj;
 		return id_sala == other.id_sala;
 	}
 
@@ -58,12 +53,19 @@ public class Salas {
 		this.num_salas = num_salas;
 	}
 
-	public Peliculas[] getId_pelicula() {
-		return arrayPeliculas;
+	public Sesion[] getArraySesiones() {
+		return arraySesiones;
 	}
 
-	public void setId_pelicula(Peliculas[] arrayPeliculas) {
-		this.arrayPeliculas = arrayPeliculas;
+	public void setArraySesiones(Sesion[] arraySesiones) {
+		this.arraySesiones = arraySesiones;
 	}
+
+	@Override
+	public String toString() {
+		return "Salas [id_sala=" + id_sala + ", nombreSalas=" + nombreSalas + ", num_salas=" + num_salas
+				+ ", arraySesiones=" + Arrays.toString(arraySesiones) + "]";
+	}
+	
 
 }

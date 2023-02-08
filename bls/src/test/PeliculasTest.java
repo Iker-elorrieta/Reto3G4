@@ -6,7 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import modelo.Peliculas;
+import modelo.Pelicula;
 
 class PeliculasTest {
 	 int id_pelicula=2;
@@ -16,10 +16,10 @@ class PeliculasTest {
 	 int duracion=132;
 	 String genero="sus";
 	 
-	 Peliculas peliculas = new Peliculas(id_pelicula,nombrePelicula,precio,duracion,genero);
-	 Peliculas peliculas1 = new Peliculas(id_pelicula,nombrePelicula,precio,duracion,genero);
-	 Peliculas peliculas3 = new Peliculas(id_pelicula0,nombrePelicula,precio,duracion,genero);
-	 Peliculas peliculas2 = null;
+	 Pelicula peliculas = new Pelicula(id_pelicula,nombrePelicula,precio,duracion,genero);
+	 Pelicula peliculas1 = new Pelicula(id_pelicula,nombrePelicula,precio,duracion,genero);
+	 Pelicula peliculas3 = new Pelicula(id_pelicula0,nombrePelicula,precio,duracion,genero);
+	 Pelicula peliculas2 = null;
 	 
 
 	@Test
