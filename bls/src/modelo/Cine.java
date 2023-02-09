@@ -39,6 +39,8 @@ public class Cine {
 
 
 	
+
+
 	@Override
 	public String toString() {
 		return "Cine [id_cine=" + id_cine + ", nombreCine=" + nombreCine + ", arraySalas=" + Arrays.toString(arraySalas)

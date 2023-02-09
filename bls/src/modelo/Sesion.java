@@ -1,12 +1,10 @@
 package modelo;
 
 import java.sql.Date;
-import java.util.Arrays;
 
 public class Sesion {
 	private int id_sesion;
 	private Date fecha;
-
 	private Pelicula pelicula;
 
 
@@ -15,7 +13,6 @@ public class Sesion {
 		this.fecha=fecha;
 		this.pelicula=pelicula;
 	};
-
 
 	public int getId_sesion() {
 		return id_sesion;
@@ -30,8 +27,6 @@ public class Sesion {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -43,9 +38,6 @@ public class Sesion {
 		Sesion other = (Sesion) obj;
 		return id_sesion == other.id_sesion;
 	}
-
-
-
 	public Pelicula getPelicula() {
 		return pelicula;
 	}
@@ -56,13 +48,9 @@ public class Sesion {
 		this.pelicula = pelicula;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Sesiones [id_sesion=" + id_sesion + ", fecha=" + fecha + ", pelicula=" + pelicula
 				+ "]";
 	}
-	
-
 }
