@@ -6,7 +6,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import org.junit.jupiter.api.Test;
 import modelo.Cine;
@@ -27,7 +29,8 @@ class CinesTest {
 	int id_sesion = 0;
 	int id_sesion0 = 1;
 	Date fecha;
-	Sesion sesiones = new Sesion(id_sesion, fecha, peliculas);
+	Time hora;
+	Sesion sesiones = new Sesion(id_sesion, fecha,hora, peliculas);
 
 	int id_sala = 9;
 	String nombreSalas = "sala1";

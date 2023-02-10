@@ -15,11 +15,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -35,9 +37,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import metodos.metodosObjetos;
+import controlador.metodosObjetos;
 
-public class ventanaPrincipal extends JFrame {
+public class vetnan extends JFrame {
 
 	/**
 	 * 
@@ -56,7 +58,7 @@ public class ventanaPrincipal extends JFrame {
 	private JButton btnAceptarFecha, btnAceptarCine, btnfinalizarSesion, btnAtrasSesion;
 	private JButton btnfinalizarCompra;
 	private JButton btnAceptarhora;
-	private JPanel panelTablaConDatos;
+	private JPanel panelTablaConDatos, panelLog;
 	private JScrollPane scrollPane;
 	private JTable tableDatos;
 	private JButton btnatrasborrar;
@@ -73,7 +75,7 @@ public class ventanaPrincipal extends JFrame {
 	int duracion;
 	String genero;
 
-	Pelicula peliculas = new Pelicula(id_pelicula, nombrePelicula, precio, duracion, genero);
+
 
 	String dni;
 	String nombre;
@@ -84,7 +86,8 @@ public class ventanaPrincipal extends JFrame {
 
 	int id_sesion;
 	Date fecha;
-	Sesion sesiones = new Sesion(id_sesion, fecha, peliculas);
+	Time hora;
+	Sesion sesiones = null;
 	Sesion[] arraySesiones = { sesiones };
 
 	int id_entrada;
@@ -103,7 +106,7 @@ public class ventanaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ventanaPrincipal frame = new ventanaPrincipal();
+					vetnan frame = new vetnan();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -115,7 +118,7 @@ public class ventanaPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ventanaPrincipal() {
+	public vetnan() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -138,7 +141,6 @@ public class ventanaPrincipal extends JFrame {
 		panelBienvenida.add(lblBienvenida);
 
 		// ------------------------------------------------------------------------------
-
 		// --------------------------------------------------------------------------------
 
 		JLabel lblPeliculaselec = new JLabel("New label");
@@ -159,9 +161,7 @@ public class ventanaPrincipal extends JFrame {
 		lblCines = new JLabel("Cines Disponibles");
 		lblCines.setFont(new Font("Tahoma", Font.BOLD, 31));
 		lblCines.setBounds(36, 37, 336, 51);
-
 		// -----------------Panel Cines-------------------//
-
 		panelCines = new JPanel();
 		panelCines.setBounds(0, 0, 436, 263);
 		contentPane.add(panelCines);
@@ -201,17 +201,13 @@ public class ventanaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				panelCines.setVisible(false);
 				panelPeliculas.setVisible(true);
-				Sala[] guardarSala = new Sala[1];
-				guardarSala = metodos.arraySalas(sala);
-				Sesion[] guardarSesion = new Sesion[1];
-				guardarSesion = metodos.arraySesiones(sesiones);
-				Pelicula[] guardarPelicula = new Pelicula[1];
-				guardarPelicula = metodos.arrayPeliculas(peliculas);
-				for (int i = 0; i < guardarSesion.length; i++) {
-					if (guardarCine[i].getId_cine() == guardarSala[i].getId_sala()) {
-						comboBoxNombrePelicula.addItem(guardarPelicula[i].getNombrePelicula());
-					};
-				};
+				String nCineSel = String.valueOf(comboBoxNombreCine.getSelectedItem());
+			
+				Pelicula[] dsna = new Pelicula[1];
+				dsna= metodos.sacarPeliculaDelCine(nCineSel, guardarCine);
+					;
+					lblPelicula.setText("" + comboBoxNombreCine.getSelectedItem());
+				
 			}
 		});
 		btnAceptarCine.setBounds(249, 133, 89, 23);
@@ -246,6 +242,18 @@ public class ventanaPrincipal extends JFrame {
 		});
 		btnfinalizarCompra.setBounds(30, 190, 150, 23);
 		panelCines.add(btnfinalizarCompra);
+
+		JButton btnLog = new JButton("Logearse");
+		btnLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCines.setVisible(false);
+				panelLog.setVisible(true);
+
+			}
+		});
+		btnLog.setBounds(300, 190, 89, 23);
+		panelCines.add(btnLog);
+
 		// ---------------------fin conector--------------------------------//
 		// -------------------------------------------------------------------//
 
@@ -282,65 +290,13 @@ public class ventanaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				panelSesion.setVisible(true);
 				panelPeliculas.setVisible(false);
-				Connection conexion;
-				lblPeliculaselec.setText("Pelicula seleccionada " + comboBoxNombrePelicula.getSelectedItem());
-				try {
-					conexion = DriverManager.getConnection("jdbc:mysql://localhost/reto3bd", "root", "");
-					Statement sentencia = conexion.createStatement();
-					int num = comboBoxNombreCine.getSelectedIndex() + 1;
-					String sql = "select * from " + " Cines join Salas on Cines.id_cine=Salas.id_cine join "
-							+ " Sesiones on Sesiones.id_sesion=Salas.id_sala join "
-							+ " Peliculas on Peliculas.id_pelicula=Sesiones.id_pelicula " + " where Cines.id_cine = "
-							+ " '" + num + "' " + " and Peliculas.id_pelicula =" + " '" + num + "'";
-
-					ResultSet resul = sentencia.executeQuery(sql);
-
-					while (resul.next()) {
-						comboBoxAceptarFecha.addItem(resul.getString("fecha"));
-					}
-					conexion.close();
-				} catch (SQLException ex) {
-					setTitle(ex.toString());
-					ex.printStackTrace();
-				}
 
 			}
 		});
-
 		btnAceptarFecha = new JButton("aceptar fecha");
 		btnAceptarFecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Date fecha = (Date) datePicker.getModel().getValue(); SimpleDateFormat
-				 * formatoFecha = new SimpleDateFormat("yyyy-M-d");
-				 * JOptionPane.showMessageDialog(null, "La fecha seleccionada es " +
-				 * formatoFecha.format(fecha)); String sx = formatoFecha.format(fecha);
-				 * System.out.println(sx);
-				 */
-				Connection conexion;
-				try {
-
-					conexion = DriverManager.getConnection("jdbc:mysql://localhost/reto3bd", "root", "");
-					Statement sentencia = conexion.createStatement();
-					int num = comboBoxNombreCine.getSelectedIndex() + 1;
-					String sql = "select  hora, precio, genero, duracion, nombreSalas from Cines "
-							+ "join Salas on Cines.id_cine=Salas.id_cine join "
-							+ "Sesiones on Sesiones.id_sesion=Salas.id_sala join "
-							+ "Peliculas on Peliculas.id_pelicula=Sesiones.id_pelicula " + "where Cines.id_cine = "
-							+ " '" + num + "'" + " " + " and Peliculas.id_pelicula = " + " '" + num + "'"
-							+ " and fecha = " + " '" + comboBoxAceptarFecha.getSelectedItem() + "'";
-
-					ResultSet resul = sentencia.executeQuery(sql);
-
-					while (resul.next()) {
-						comboBoxAceptarHora.addItem(resul.getString("hora"));
-					}
-					conexion.close();
-				} catch (SQLException ex) {
-					setTitle(ex.toString());
-					ex.printStackTrace();
-				}
-
+				
 			}
 		});
 		btnAceptarPelicula.setBounds(66, 177, 89, 23);
@@ -364,7 +320,7 @@ public class ventanaPrincipal extends JFrame {
 		panelSesion.add(btnAceptarFecha);
 
 		comboBoxAceptarFecha = new JComboBox<String>();
-		comboBoxAceptarFecha.setBounds(150, 60, 80, 22);
+		comboBoxAceptarFecha.setBounds(150, 60, 190, 22);
 		panelSesion.add(comboBoxAceptarFecha);
 
 		comboBoxAceptarHora = new JComboBox<String>();
@@ -387,8 +343,6 @@ public class ventanaPrincipal extends JFrame {
 				comboBoxAceptarHora.removeAllItems();
 				panelCines.setVisible(true);
 				panelSesion.setVisible(false);
-				JOptionPane.showMessageDialog(null, "ok");
-
 			}
 		});
 		btnfinalizarSesion.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -466,7 +420,11 @@ public class ventanaPrincipal extends JFrame {
 		});
 		btnatrasborrar.setBounds(0, 0, 89, 23);
 		panelTablaConDatos.add(btnatrasborrar);
-		panelTablaConDatos.setVisible(false);
 
+		panelLog = new JPanel();
+		panelLog.setBounds(0, 0, 436, 263);
+		contentPane.add(panelLog);
+		panelLog.setLayout(null);
+		panelTablaConDatos.setVisible(false);
 	}
 }

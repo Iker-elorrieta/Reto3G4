@@ -6,7 +6,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
-
+import java.sql.Time;
+import java.util.Calendar;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,11 +28,11 @@ class SesionesTest {
 	int id_sesion = 0;
 	int id_sesion0 = 1;
 	Date fecha;
-	Sesion sesiones = new Sesion(id_sesion, fecha,  peliculas);
-	Sesion sesiones1 = new Sesion(id_sesion, fecha,  peliculas);
+	Time hora;
+	Sesion sesiones = new Sesion(id_sesion, fecha,hora, peliculas);
+	Sesion sesiones1 = new Sesion(id_sesion, fecha,hora, peliculas);
 	Sesion sesiones2 = null;
-	Sesion sesiones3 = new Sesion(id_sesion0, fecha, peliculas);
-	
+	Sesion sesiones3 = new Sesion(id_sesion0, fecha,hora, peliculas);
 	@Test
 	void test() {
 		sesiones.setFecha(fecha);

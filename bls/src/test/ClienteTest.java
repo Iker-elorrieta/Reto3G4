@@ -29,7 +29,6 @@ class ClienteTest {
 		cliente.setNombre(nombre);
 		assertEquals(cliente.getApellido(),apellido);
 		assertEquals(cliente.getDni(),dni);
-
 		assertEquals(cliente.getContrasenya(),contrasenya);
 		assertEquals(cliente.getNombre(),nombre);
 		assertEquals(cliente.getSexo(),sexo);

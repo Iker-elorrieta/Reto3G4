@@ -1,17 +1,36 @@
 package modelo;
 
-import java.sql.Date;
+import java.util.Date;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Sesion {
 	private int id_sesion;
 	private Date fecha;
+	private Time hora;
 	private Pelicula pelicula;
 
-
-	public Sesion( int id_sesion,Date fecha,Pelicula pelicula) {
+	public Sesion( int id_sesion,Date fecha,Time hora,Pelicula pelicula) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, 2000);
+		cal.set(Calendar.MONTH, 1 - 1);
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+		formatoFecha.format(cal.getTime());
+		fecha =  cal.getTime();
+		
+		Calendar cal1 = Calendar.getInstance();
+		cal.set(Calendar.HOUR, 10);
+		cal.set(Calendar.MINUTE, 20);
+		SimpleDateFormat formatoFecha1 = new SimpleDateFormat("hh:mm");
+		formatoFecha1.format(cal1.getTime());
+		java.util.Date date = cal1.getTime();
+		hora = new java.sql.Time(date.getTime());
 		this.id_sesion=id_sesion;
 		this.fecha=fecha;
 		this.pelicula=pelicula;
+		this.hora=hora;
 	};
 
 	public int getId_sesion() {
@@ -22,6 +41,7 @@ public class Sesion {
 	}
 
 	public Date getFecha() {
+	
 		return fecha;
 	}
 	public void setFecha(Date fecha) {
@@ -52,5 +72,13 @@ public class Sesion {
 	public String toString() {
 		return "Sesiones [id_sesion=" + id_sesion + ", fecha=" + fecha + ", pelicula=" + pelicula
 				+ "]";
+	}
+
+	public Time getHora() {
+		return hora;
+	}
+
+	public void setHora(Time hora) {
+		this.hora = hora;
 	}
 }

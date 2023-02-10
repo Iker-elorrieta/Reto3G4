@@ -4,7 +4,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Arrays;
+import java.util.Calendar;
+
 import org.junit.jupiter.api.Test;
 import modelo.Cliente;
 import modelo.Entrada;
@@ -35,7 +38,8 @@ class EntradasTest {
 	int id_sesion = 0;
 	int id_sesion0 = 1;
 	Date fecha;
-	Sesion sesiones = new Sesion(id_sesion, fecha, peliculas);
+	Time hora;
+	Sesion sesiones = new Sesion(id_sesion, fecha,hora, peliculas);
 	Sesion [] arraySesiones= {sesiones};
 
 	Entrada entradas = new Entrada(id_entrada,cliente, arraySesiones,precioTotal);
@@ -43,7 +47,6 @@ class EntradasTest {
 	Entrada entradas2 = null;
 	Entrada entradas3 = new Entrada(id_entrada0, cliente, arraySesiones,precioTotal);
 	@Test
-
 	void test() {
 		entradas.setCliente(cliente);
 		entradas.setId_entrada(id_entrada);
