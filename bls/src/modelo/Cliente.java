@@ -6,15 +6,21 @@ public class Cliente {
 	private String dni;
 	private String nombre;
 	private String apellido;
-	private char sexo;
+	private String sexo;
 	private String contrasenya;
 
-	public Cliente( String dni, String nombre, String apellido, char sexo, String contrasenya) {
+	public Cliente( String dni, String nombre, String apellido, String sexo, String contrasenya) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.sexo = sexo;
 		this.contrasenya = contrasenya;
+	}
+
+
+
+	public Cliente() {
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -43,11 +49,11 @@ public class Cliente {
 		this.apellido = apellido;
 	}
 
-	public char getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(char sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 

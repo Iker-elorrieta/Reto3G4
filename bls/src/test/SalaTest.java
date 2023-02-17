@@ -5,7 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Arrays;
+
 
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +15,7 @@ import modelo.Pelicula;
 import modelo.Sala;
 import modelo.Sesion;
 
-class SalasTest {
+class SalaTest {
 	int id_sala = 1;
 	int id_sala0 = 0;
 	String nombreSalas = "main";
@@ -30,8 +32,8 @@ class SalasTest {
 	int id_sesion = 0;
 	int id_sesion0 = 1;
 	Date fecha;
-
-	Sesion sesiones = new Sesion(id_sesion, fecha, peliculas);
+	Time hora;
+	Sesion sesiones = new Sesion(id_sesion, fecha,hora, peliculas);
 	Sesion [] arraySesiones= {sesiones};
 
 	Sala sala = new Sala(id_sala, nombreSalas, arraySesiones);
