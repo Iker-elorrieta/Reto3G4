@@ -1,4 +1,5 @@
 package vista;
+
 import java.awt.Color;
 
 import java.awt.Component;
@@ -8,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.util.HashSet;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,18 +17,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
 
 import Controlador.metodos;
 import modelo.Cine;
 import modelo.Pelicula;
 import modelo.Sala;
 import modelo.Sesion;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class VistaCine extends JFrame {
 	/**
@@ -39,23 +41,21 @@ public class VistaCine extends JFrame {
 	private JPanel panelCines, panelBienvenida, panelPeliculas, panelSesion;
 	private JLabel lblCines;
 	private JLabel lblPelicula;
+	JScrollPane scrollPane;
 	private JComboBox<String> comboBoxNombrePelicula, comboBoxAceptarFecha, comboBoxAceptarSesion, comboBoxNombreCine;
-	String nCineSel ;
+	String nCineSel;
 	private JButton btnAceptarPelicula;
 	private JLabel lblfechas;
 	private JLabel lblhorario;
-	private JButton btnAceptarFecha, btnAceptarCine, btnfinalizarSesion, btnAtrasSesion;
+	private JButton btnAceptarCine, btnfinalizarSesion, btnAtrasSesion;
 	private JButton btnfinalizarCompra;
-	private JPanel panelTablaConDatos, panelLog;
-	private JScrollPane scrollPane;
-	private JTable tableDatos;
+	private JPanel panelFinalizarSesion, panelLog;
+
 	private JButton btnatrasborrar;
-	private DefaultTableModel model;
 
 	/**
 	 * Launch the application.
 	 */
-	
 
 	int id_sala;
 	String nombreSalas;
@@ -63,13 +63,15 @@ public class VistaCine extends JFrame {
 	Sesion sesion = new Sesion();
 	Pelicula pelicula = new Pelicula();
 	Sala[] arraySalas = { sala };
+	String[] fechas;
 	String[] guardarNombrePeliculas = new String[0];
-	private Cine[] guardarCine = new Cine[1];
 	Pelicula[] peliculas;
-
-	
+	Cine[] cargaDatos;
+	metodos metodos = new metodos();
+	String[] nombresC;
 	String nPeliSel = "";
-	
+	private JTable table;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -94,6 +96,9 @@ public class VistaCine extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
+		Cine[] cargado = metodos.cargarDatos();
+
+		
 
 		lblBienvenida = new JLabel("Bienvenido");
 		lblBienvenida.setForeground(Color.BLUE);
@@ -108,7 +113,6 @@ public class VistaCine extends JFrame {
 		panelBienvenida.setVisible(true);
 		panelBienvenida.add(lblBienvenida);
 
-	
 		JLabel lblPeliculaselec = new JLabel();
 		lblPeliculaselec.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPeliculaselec.setBounds(40, 11, 350, 25);
@@ -135,6 +139,9 @@ public class VistaCine extends JFrame {
 		comboBoxNombreCine = new JComboBox<String>();
 		comboBoxNombreCine.setBounds(32, 99, 113, 33);
 		panelCines.add(comboBoxNombreCine);
+		for (int i = 0; i < cargado.length; i++) {
+			comboBoxNombreCine.addItem(cargado[i].getNombreCine());
+		}
 
 		panelBienvenida.addMouseListener(new MouseAdapter() {
 			@Override
@@ -149,11 +156,7 @@ public class VistaCine extends JFrame {
 
 			}
 		});
-		metodos metodos = new metodos();
-		guardarCine = metodos.arrayCines();
-		for (int i = 0; i < guardarCine.length; i++) {
-			comboBoxNombreCine.addItem(guardarCine[i].getNombreCine());
-		}
+
 		btnAceptarCine = new JButton("Aceptar");
 
 		btnAceptarCine.addActionListener(new ActionListener() {
@@ -162,12 +165,19 @@ public class VistaCine extends JFrame {
 				panelPeliculas.setVisible(true);
 				nCineSel = String.valueOf(comboBoxNombreCine.getSelectedItem());
 				lblPelicula.setText(nCineSel);
-				 peliculas = new Pelicula[1];
-				peliculas= metodos.sacarPeliculaDelCine(nCineSel, guardarCine);
-					for(int i=0;i<peliculas.length;i++) {
-						comboBoxNombrePelicula.addItem(peliculas[i].getNombrePelicula());
-					}
+				peliculas = metodos.sacarPeliculasC(cargado, nCineSel);
+				for (int i = 0; i < peliculas.length; i++) {
+					comboBoxNombrePelicula.addItem(peliculas[i].getNombrePelicula());
+				}
 				
+				HashSet<String> set = new HashSet<String>();
+				for (int i = 0; i < comboBoxNombrePelicula.getItemCount(); i++) {
+				set.add(comboBoxNombrePelicula.getItemAt(i).toString());
+				}
+				comboBoxNombrePelicula.removeAllItems();
+				for (String item : set) {
+				comboBoxNombrePelicula.addItem(item);
+				}
 			}
 		});
 		btnAceptarCine.setBounds(249, 133, 89, 23);
@@ -176,28 +186,9 @@ public class VistaCine extends JFrame {
 		btnfinalizarCompra = new JButton("Finalizar Compra");
 		btnfinalizarCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JPanel tablaPane = new JPanel();
-				tablaPane.setBounds(10, 10, 100, 100);
-				tablaPane.setLayout(null);
-				contentPane.add(scrollPane);
-
-				tableDatos = new JTable();
-				model = new DefaultTableModel();
-				tableDatos.setModel(model);
-
-				model.addColumn("Cine");
-				model.addColumn("Pelicula");
-				model.addColumn("Fecha");
-				model.addColumn("Hora");
-				model.addColumn("Sala");
-				model.addColumn("Duración");
-				model.addColumn("Genero");
-				model.addColumn("Precio");
-
-				tableDatos.getColumnModel().getColumn(5).setPreferredWidth(350);
-				scrollPane.setViewportView(tableDatos);
-				tablaPane.add(scrollPane);
-
+				panelFinalizarSesion.setVisible(true);
+				panelCines.setVisible(false);
+			
 			}
 		});
 		btnfinalizarCompra.setBounds(30, 190, 150, 23);
@@ -211,9 +202,8 @@ public class VistaCine extends JFrame {
 
 			}
 		});
-		btnLog.setBounds(300, 190, 89, 23);
-		panelCines.add(btnLog);
-		
+		btnLog.setBounds(300, 20, 89, 23);
+
 		panelPeliculas = new JPanel();
 		panelPeliculas.setBounds(0, 0, 436, 263);
 		contentPane.add(panelPeliculas);
@@ -224,12 +214,10 @@ public class VistaCine extends JFrame {
 		JButton btnatras = new JButton("Atras");
 		btnatras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				panelPeliculas.setVisible(false);
 				panelCines.setVisible(true);
 				comboBoxNombrePelicula.removeAllItems();
 			}
-
 		});
 		btnatras.setBounds(271, 171, 89, 23);
 		panelPeliculas.add(btnatras);
@@ -240,34 +228,21 @@ public class VistaCine extends JFrame {
 		panelSesion.setVisible(false);
 		panelSesion.setLayout(null);
 		panelSesion.add(lblPeliculaselec);
-		
+
 		// -----------------------------------------------------------//
 		btnAceptarPelicula = new JButton("Aceptar");
 		btnAceptarPelicula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				panelSesion.setVisible(true);
 				panelPeliculas.setVisible(false);
 				nPeliSel = String.valueOf(comboBoxNombrePelicula.getSelectedItem());
 				lblPeliculaselec.setText(nPeliSel);
-				String [] guardarSesion =metodos.sacarFechaPelicula(guardarCine, nPeliSel, nCineSel);
-				for(int i=0;i<guardarSesion.length;i++) {
-					comboBoxAceptarFecha.addItem(guardarSesion[i].toString());
+				fechas = metodos.sacarFechaPelicula(cargado,nPeliSel, nCineSel);
+				for (int i = 0; i < fechas.length; i++) {
+					comboBoxAceptarFecha.addItem(fechas[i]);
 				}
-				
 
-			}
-		});
-		btnAceptarFecha = new JButton("aceptar fecha");
-		btnAceptarFecha.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnfinalizarSesion.setVisible(true);
-				comboBoxAceptarSesion.removeAllItems();
-				String fecha = comboBoxAceptarFecha.getSelectedItem().toString();
-				String [] guardarHoras =metodos.sacarHora(nCineSel, nPeliSel, fecha);
-				for(int i=0;i<guardarHoras.length;i++) {
-					comboBoxAceptarSesion.addItem(guardarHoras[i].toString());
-				}
-				
 			}
 		});
 		btnAceptarPelicula.setBounds(66, 177, 89, 23);
@@ -279,10 +254,20 @@ public class VistaCine extends JFrame {
 		lblhorario.setBounds(10, 100, 150, 15);
 		panelSesion.add(lblhorario);
 
-		btnAceptarFecha.setBounds(260, 60, 160, 23);
-		panelSesion.add(btnAceptarFecha);
-
 		comboBoxAceptarFecha = new JComboBox<String>();
+		comboBoxAceptarFecha.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(comboBoxAceptarFecha.getSelectedItem() != null) {
+					btnfinalizarSesion.setVisible(true);
+					comboBoxAceptarSesion.removeAllItems();
+					String fecha = comboBoxAceptarFecha.getSelectedItem().toString();
+					String[] guardarHoras = metodos.sacarDatosF(nCineSel, fecha, cargado);
+					for (int i = 0; i < guardarHoras.length; i++) {
+						comboBoxAceptarSesion.addItem(guardarHoras[i].toString());
+				}
+				}
+			}
+		});
 		comboBoxAceptarFecha.setBounds(150, 60, 100, 22);
 		panelSesion.add(comboBoxAceptarFecha);
 
@@ -293,23 +278,20 @@ public class VistaCine extends JFrame {
 		btnfinalizarSesion = new JButton("finalizar");
 		btnfinalizarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 
 				comboBoxNombrePelicula.removeAllItems();
 				comboBoxAceptarFecha.removeAllItems();
 				comboBoxAceptarSesion.removeAllItems();
 				JFrame jFrame = new JFrame();
-				JOptionPane.showMessageDialog(jFrame, "La pelicula ha sido guarda en pedidos correctamente.");
+				JOptionPane.showMessageDialog(jFrame, "La pelicula ha sido guarda en entradas correctamente.");
 				panelCines.setVisible(true);
 				panelSesion.setVisible(false);
-				}
-			
+			}
 		});
 		btnfinalizarSesion.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnfinalizarSesion.setBounds(270, 190, 100, 23);
 		panelSesion.add(btnfinalizarSesion);
 		btnfinalizarSesion.setVisible(false);
-
 
 		btnAtrasSesion = new JButton("Atras");
 		btnAtrasSesion.addActionListener(new ActionListener() {
@@ -318,33 +300,46 @@ public class VistaCine extends JFrame {
 				panelPeliculas.setVisible(true);
 				comboBoxAceptarFecha.removeAllItems();
 				comboBoxAceptarSesion.removeAllItems();
+				
 				btnfinalizarSesion.setVisible(false);
-
+				
 			}
 		});
 		btnAtrasSesion.setBounds(80, 190, 89, 23);
 		panelSesion.add(btnAtrasSesion);
 
-		panelTablaConDatos = new JPanel();
-		panelTablaConDatos.setBounds(0, 0, 436, 263);
-		contentPane.add(panelTablaConDatos);
-		panelTablaConDatos.setLayout(null);
+		panelFinalizarSesion = new JPanel();
+		panelFinalizarSesion.setBounds(0, 0, 436, 263);
+		contentPane.add(panelFinalizarSesion);
+		panelFinalizarSesion.setLayout(null);
 
-		btnatrasborrar = new JButton("New button");
+		btnatrasborrar = new JButton("Atras");
 		btnatrasborrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				panelCines.setVisible(true);
+				panelFinalizarSesion.setVisible(false);
 			}
 		});
-		btnatrasborrar.setBounds(0, 0, 89, 23);
-		panelTablaConDatos.add(btnatrasborrar);
+		btnatrasborrar.setBounds(20, 20, 89, 23);
+		panelFinalizarSesion.add(btnatrasborrar);
 
 		panelLog = new JPanel();
 		panelLog.setBounds(0, 0, 436, 263);
 		contentPane.add(panelLog);
 		panelLog.setLayout(null);
-		panelTablaConDatos.setVisible(false);
-	
-	}
+		panelFinalizarSesion.setVisible(false);
+		panelFinalizarSesion.add(btnLog);
 
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(90, 50, 300, 130);
+		panelFinalizarSesion.add(scrollPane);
+
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+				new Object[][] { { "null", "7.5", "sherk", "telacreiste wey", "sala principal" } },
+				new String[] { "Cliente", "Precio", "pelicula", "Entrada", "Sala" }));
+		table.setBounds(0, 0, 1, 1);
+		scrollPane.setViewportView(table);
+
+	}
 }

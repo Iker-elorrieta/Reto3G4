@@ -1,11 +1,11 @@
 package test;
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Arrays;
 
 
 import org.junit.jupiter.api.Test;
@@ -42,28 +42,27 @@ class EntradaTest {
 	Sesion sesiones = new Sesion(id_sesion, fecha,hora, peliculas);
 	Sesion [] arraySesiones= {sesiones};
 
-	Entrada entradas = new Entrada(id_entrada,cliente, arraySesiones,precioTotal);
-	Entrada entradas1 = new Entrada(id_entrada, cliente, arraySesiones,precioTotal);
+	Entrada entradas = new Entrada();
+	Entrada entradas1 = new Entrada();
 	Entrada entradas2 = null;
-	Entrada entradas3 = new Entrada(id_entrada0, cliente, arraySesiones,precioTotal);
+	Entrada entradas3 = new Entrada();
 	@Test
 	void test() {
-		entradas.setCliente(cliente);
 		entradas.setId_entrada(id_entrada);
-		entradas.setSesiones(arraySesiones);
-		entradas.setPrecioTotal(precioTotal);
+		entradas.setEntradaSesion(sesiones);
+		entradas.setPrecioSD(precio);
 		assertEquals(entradas.getId_entrada(), id_entrada);
-		assertTrue(entradas.getSesiones().equals(arraySesiones));
-		assertTrue(entradas.getCliente().equals(cliente));
-		assertEquals(entradas.getPrecioTotal(), precioTotal,1.1f);
-
+		assertEquals(entradas.getEntradaSesion(),sesiones);
+		assertEquals(entradas.getPrecioSD(), precioTotal,1.1f);
+		entradas1.setId_entrada(id_entrada);
 		assertTrue(entradas.equals(entradas1));
+		
 		assertFalse(entradas.equals(entradas2));
 		assertTrue(entradas.equals(entradas));
+		entradas3.setId_entrada(21);
 		assertFalse(entradas.equals(entradas3));
 		assertFalse(entradas.equals(entradas.getClass()));
-		assertEquals(entradas.toString(),"Entrada [id_entrada=" + id_entrada + ", cliente=" + cliente + ", arraySesiones="
-				+ Arrays.toString(arraySesiones) + ", precioTotal=" + precioTotal + "]");
+		assertEquals(entradas.toString(),"Entrada [id_entrada=" + id_entrada + ", entradaSesion=" + sesiones + ", precioSD=" + precio
+				+ "]");
 	}
-	
 }

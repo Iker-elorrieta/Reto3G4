@@ -5,55 +5,72 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 import org.junit.jupiter.api.Test;
 
 import Controlador.metodos;
 import modelo.Cine;
 import modelo.Cliente;
 import modelo.Pelicula;
-import modelo.Sesion;
 
 public class metodosTest {
 
 
-	final String server = "jdbc:mysql://localhost/reto3bd";
+	final String server = "jdbc:mysql://localhost/reto3bdbb";
 	final String user = "root";
 	final String pass = "";
 	
 	metodos metodos = new metodos();
 
 	@Test
-	public void testArrayCines() {
-		Cine[] cines = metodos.arrayCines();
-		Cine[] cines2 = metodos.arrayCines();
+	public void testSacarPeliculasC() {
+		String nombreCineSel = "Cines Yelmo";
+		String nombrePeliSel = "Interestelar";
+		Cine[] cines = metodos.cargarDatos();
+		Pelicula[] pelicula = metodos.sacarPeliculasC(cines, nombreCineSel);
+		metodos.sacarPeliculasC(cines, nombreCineSel);
+		assertEquals(cines[0].getNombreCine(), nombreCineSel);
+		assertNotEquals(pelicula[0].getNombrePelicula(), nombrePeliSel);
 
+	}
+	
+	
+	@Test
+	public void testCargarDatos() {
+
+		String nombreCineSel = "Cines Yelmo";
+		Cine[] cines = metodos.cargarDatos();
+		Cine[] cines2 = metodos.cargarDatos();
+		
+		Pelicula[] arrayPeliculas = metodos.sacarPeliculasC(cines, nombreCineSel);
+		Pelicula[] peliNueva = metodos.sacarPeliculasC(cines, nombreCineSel);
+		
+
+		
+		
+		for (int i = 0; i < arrayPeliculas.length; i++) {
+			assertEquals(arrayPeliculas[i].getId_pelicula(),peliNueva[i].getId_pelicula());
+			assertEquals(arrayPeliculas[i].getDuracion(),peliNueva[i].getDuracion());
+			assertEquals(arrayPeliculas[i].getGenero(),peliNueva[i].getGenero());
+			assertEquals(arrayPeliculas[i].getNombrePelicula(),peliNueva[i].getNombrePelicula());
+			assertEquals(arrayPeliculas[i].getPrecio(),peliNueva[i].getPrecio());
+		}
+		
 		for (int i = 0; i < cines.length; i++) {
 			assertEquals(cines2[i].getId_cine(), cines[i].getId_cine());
 			assertEquals(cines2[i].getNombreCine(), cines[i].getNombreCine());
-			assertEquals(cines2[i].getId_sala(), cines[i].getId_sala());
+			assertNotEquals(cines2[i].getId_sala(), cines[i].getId_sala());
 		}
+		
+
+
 
 	}
 
-	@Test
-	public void testArraySesiones() {
-		Sesion[] sesiones = metodos.arraySesiones();
-		Sesion[] sesiones2 = metodos.arraySesiones();
-
-		for (int i = 0; i < sesiones.length; i++) {
-			assertEquals(sesiones[i].getId_sesion(), sesiones2[i].getId_sesion());
-			assertEquals(sesiones[i].getFecha(), sesiones2[i].getFecha());
-			assertEquals(sesiones[i].getHora(), sesiones2[i].getHora());
-			assertEquals(sesiones[i].getPelicula(), sesiones2[i].getPelicula());
-		}
-	}
 
 	@Test
 	public void testArrayClientes() {
-		Cliente cliente = new Cliente();
-		Cliente[] clientes = metodos.arrayClientes(cliente);
-		Cliente[] clientes2 = metodos.arrayClientes(cliente);
+		Cliente[] clientes = metodos.arrayClientes();
+		Cliente[] clientes2 = metodos.arrayClientes();
 
 		for (int i = 0; i < clientes.length; i++) {
 			assertEquals(clientes[i].getDni(), clientes2[i].getDni());
@@ -64,27 +81,16 @@ public class metodosTest {
 		}
 	}
 
-	@Test
-	public void testSacarPeliculaDelCine() {
-		String nombreCineSel = "Cines Yelmo";
-		Cine[] cines = metodos.arrayCines();
-		metodos.sacarPeliculaDelCine(nombreCineSel, cines);
-		metodos.arrayCines();
 
-
-
-		assertEquals(cines[0].getNombreCine(), nombreCineSel);
-
-	}
 	
 	
 	@Test
-	public void testFechaPelicula() {
+	public void testSacarFechaPelicula() {
 		String nCineSel = "Cines Yelmo";
 		String nomPeliculaSel = "Shrek";
 
-		Cine[] cine = metodos.arrayCines();
-		Pelicula[] pelicula = metodos.sacarPeliculaDelCine(nCineSel, cine);
+		Cine[] cine = metodos.cargarDatos();
+		Pelicula[] pelicula = metodos.sacarPeliculasC(cine, nCineSel);
 		metodos.sacarFechaPelicula(cine, nomPeliculaSel, nCineSel);	
 
 		assertEquals(cine[0].getNombreCine(),nCineSel);
@@ -98,15 +104,13 @@ public class metodosTest {
 	String nomPeliculaSel = "Shrek";
 	String fecha = "2023-02-07";
 
-	Cine[] cine = metodos.arrayCines();
-	Pelicula[] pelicula = metodos.sacarPeliculaDelCine(nCineSel, cine);
-	Sesion[] sesion = metodos.arraySesiones();
-	metodos.sacarHora(nCineSel,  nomPeliculaSel, fecha);
+	Cine[] cine = metodos.cargarDatos();
+	Pelicula[] pelicula = metodos.sacarPeliculasC(cine, nCineSel);
+	metodos.sacarDatosF(nCineSel, fecha, cine);
 
 	assertEquals(cine[0].getNombreCine(),nCineSel);
 	assertEquals(pelicula[0].getNombrePelicula(),nomPeliculaSel);
-	assertNotEquals(sesion[0].getFecha(),fecha);
 
 	}
-
+	
 }

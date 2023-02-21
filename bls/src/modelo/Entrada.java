@@ -1,18 +1,19 @@
 package modelo;
 
-import java.util.Arrays;
-
 public class Entrada {
 	private int id_entrada;
-	private Cliente cliente;
-	private Sesion [] arraySesiones;
-	private float precioTotal;
+	private Sesion entradaSesion;
+	private float precioSD;
 	
-	public Entrada(int id_entrada,Cliente cliente,Sesion [] arraySesiones,float precioTotal) {
-		this.id_entrada=id_entrada;
-		this.cliente = cliente;
-		this.arraySesiones=arraySesiones;
-		this.precioTotal=precioTotal;
+	public Sesion getEntradaSesion() {
+		return entradaSesion;
+	}
+
+	public void setEntradaSesion(Sesion entradaSesion) {
+		this.entradaSesion = entradaSesion;
+	}
+
+	public Entrada() {
 	}
 
 	public int getId_entrada() {
@@ -22,22 +23,12 @@ public class Entrada {
 	public void setId_entrada(int id_entrada) {
 		this.id_entrada = id_entrada;
 	}
-	
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
 
 
 	@Override
 	public String toString() {
-		return "Entrada [id_entrada=" + id_entrada + ", cliente=" + cliente + ", arraySesiones="
-				+ Arrays.toString(arraySesiones) + ", precioTotal=" + precioTotal + "]";
+		return "Entrada [id_entrada=" + id_entrada + ", entradaSesion=" + entradaSesion + ", precioSD=" + precioSD
+				+ "]";
 	}
 
 	@Override
@@ -52,20 +43,15 @@ public class Entrada {
 		return id_entrada == other.id_entrada;
 	}
 
-	public Sesion [] getSesiones() {
-		return arraySesiones;
+
+
+	public float getPrecioSD() {
+		return precioSD;
 	}
 
-	public void setSesiones(Sesion [] arraySesiones) {
-		this.arraySesiones = arraySesiones;
+	public void setPrecioSD(float precioSD) {
+		this.precioSD = precioSD;
 	}
 
-	public float getPrecioTotal() {
-		return precioTotal;
-	}
-
-	public void setPrecioTotal(float precioTotal) {
-		this.precioTotal = precioTotal;
-	}
 
 }

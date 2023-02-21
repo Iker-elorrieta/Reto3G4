@@ -12,7 +12,6 @@ public class Cine {
 		this.nombreCine = nombreCine;
 		this.arraySalas = arraySalas;
 	}
-
 	public Cine() {
 		// TODO Auto-generated constructor stub
 	}

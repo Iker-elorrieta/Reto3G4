@@ -16,11 +16,7 @@ public class Sesion {
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 		formatoFecha.format(cal.getTime());
 		fecha = cal.getTime();
-		Calendar cal1 = Calendar.getInstance();
-		SimpleDateFormat formatoFecha1 = new SimpleDateFormat("hh:mm");
-		formatoFecha1.format(cal1.getTime());
-		java.util.Date date = cal1.getTime();
-		hora = new java.sql.Time(date.getTime());
+	
 		this.id_sesion = id_sesion;
 		this.fecha = fecha;
 		this.pelicula = pelicula;
@@ -74,9 +70,9 @@ public class Sesion {
 	}
 
 	public Time getHora() {
+	
 		return hora;
 	}
-
 	public void setHora(Time hora) {
 		this.hora = hora;
 	}

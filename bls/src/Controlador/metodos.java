@@ -3,7 +3,6 @@ package Controlador;
 import java.sql.*;
 import modelo.Cine;
 import modelo.Cliente;
-import modelo.Entrada;
 import modelo.Pelicula;
 import modelo.Sala;
 import modelo.Sesion;
@@ -15,67 +14,161 @@ public class metodos {
 	final String pass = "";
 	String guardarcine = "";
 	int guardarIdCine = 0;
+	// -----------finals de bd--------------//
+	final String cines = "cines";
+	final String id_cine = "id_cine";
+	final String nombreCine = "nombreCine";
+	final String cliente = "cliente";
+	final String Apellidos = "Apellidos";
+	final String contrasena = "contrasena";
+	final String dni = "dni";
+	final String nombre = "nombre";
+	final String sexo = "sexo";
+	final String id_sala = "id_sala";
+	final String nombreSalas = "nombreSalas";
+	final String sesiones = "sesiones";
+	final String fecha = "fecha";
+	final String hora = "hora";
+	final String id_sesion = "id_sesion";
+	final String salas = "salas";
+	final String peliculas = "peliculas";
+	final String duracion = "duracion";
+	final String genero = "genero";
+	final String id_pelicula = "id_pelicula";
+	final String nombrePelicula = "nombrePelicula";
+	final String precio = "precio";
+	// ---------------------------------------------//
 
-	public Cine[] arrayCines() {
+	public Pelicula[] sacarPeliculasC(Cine[] arrayCines, String nCineSel) {
 
-		Cine[] cargaCines = new Cine[0];
+		Pelicula[] arrayPeliculas = new Pelicula[0];
+		for (int i = 0; i < arrayCines.length; i++) {
+			if (arrayCines[i].getNombreCine().equals(nCineSel)) {
+				for (int j = 0; j < arrayCines[i].getId_sala().length; j++) {
+					for (int k = 0; k < arrayCines[i].getId_sala()[j].getArraySesiones().length; k++) {
+						Pelicula[] peliNueva = new Pelicula[arrayPeliculas.length + 1];
+						for (int l = 0; l < arrayPeliculas.length; l++) {
+							peliNueva[l] = arrayPeliculas[l];
+						}
+						peliNueva[arrayPeliculas.length] = arrayCines[i].getId_sala()[j].getArraySesiones()[k]
+								.getPelicula();
+						arrayPeliculas = peliNueva;
+					}
+				}
+			}
+
+		}
+		return arrayPeliculas;
+	}
+
+	public Cine[] cargarDatos() {
+
+		Cine[] arrayCine = new Cine[0];
+		Cine cine;
+		Sala sala;
+		Sesion sesion;
+		Pelicula pelicula;
 		Connection conexion;
+//		boolean repetido = false;
 		try {
+
 			conexion = DriverManager.getConnection(server, user, pass);
 			Statement sacaCine = conexion.createStatement();
-			String sql = "select * from cines";
-			ResultSet resul = sacaCine.executeQuery(sql);
-			while (resul.next()) {
-				Cine cine = new Cine();
-				cine.setId_cine(resul.getInt("id_cine"));
-				cine.setNombreCine(resul.getString("nombreCine"));
+			String sql = "select * from " + cines;
+			ResultSet cargaCines = sacaCine.executeQuery(sql);
 
-				Cine[] cineNuevo = new Cine[cargaCines.length + 1];
-				for (int i = 0; i < cargaCines.length; i++) {
-					cineNuevo[i] = cargaCines[i];
+			while (cargaCines.next()) {
+
+				cine = new Cine();
+				cine.setNombreCine(cargaCines.getString(nombreCine));
+				cine.setId_cine(cargaCines.getInt(id_cine));
+
+				Statement sacaCineu = conexion.createStatement();
+				String sql1 = "select * from " + salas + " where " + id_cine + " = " + "'" + cine.getId_cine() + "'";
+				ResultSet cargaSala = sacaCineu.executeQuery(sql1);
+
+				Sala[] arraySalas = new Sala[0];
+				while (cargaSala.next()) {
+					sala = new Sala();
+					sala.setId_sala(cargaSala.getInt(id_sala));
+					sala.setNombreSalas(cargaSala.getString(nombreSalas));
+
+					Statement sacaSalau = conexion.createStatement();
+					String sql2 = "select * from " + sesiones + " where sesiones.id_sala= " + "'" + sala.getId_sala()
+							+ "'";
+					ResultSet cargaSesiones = sacaSalau.executeQuery(sql2);
+					Sesion[] arraySesion = new Sesion[0];
+
+					while (cargaSesiones.next()) {
+						sesion = new Sesion();
+						sesion.setFecha(cargaSesiones.getDate(fecha));
+						sesion.setHora(cargaSesiones.getTime(hora));
+						sesion.setId_sesion(cargaSesiones.getInt(id_sesion));
+
+						Statement sacaSesionu = conexion.createStatement();
+						String sql3 = "select * from " + peliculas + "," + sesiones
+								+ " where sesiones.id_pelicula=peliculas.id_pelicula and sesiones.id_sesion = " + "'"
+								+ sesion.getId_sesion() + "'";
+						ResultSet cargaPeliculas = sacaSesionu.executeQuery(sql3);
+						Pelicula[] arrayPeliculas = new Pelicula[0];
+						while (cargaPeliculas.next()) {
+							pelicula = new Pelicula();
+							pelicula.setDuracion(cargaPeliculas.getInt(duracion));
+							pelicula.setGenero(cargaPeliculas.getString(genero));
+							pelicula.setId_pelicula(cargaPeliculas.getInt(id_pelicula));
+							pelicula.setNombrePelicula(cargaPeliculas.getString(nombrePelicula));
+							pelicula.setPrecio(cargaPeliculas.getFloat(precio));
+
+				/*			for (int m = 0; m < arrayPeliculas.length; m++) {
+								if (arrayPeliculas[m].getId_pelicula() == pelicula.getId_pelicula()) {
+			
+									repetido = true;
+									break;
+								}
+							}*/
+						//	if (!repetido) {
+								Pelicula[] peliNueva = new Pelicula[arrayPeliculas.length + 1];
+								peliNueva[arrayPeliculas.length] = pelicula;
+								arrayPeliculas = peliNueva;
+								sesion.setPelicula(pelicula);
+
+					//		}
+						}
+
+						Sesion[] sesionNueva = new Sesion[arraySesion.length + 1];
+						for (int l = 0; l < arraySesion.length; l++) {
+							sesionNueva[l] = arraySesion[l];
+						}
+						sesionNueva[arraySesion.length] = sesion;
+						arraySesion = sesionNueva;
+						sala.setArraySesiones(arraySesion);
+
+					}
+
+					Sala[] salaNuevo = new Sala[arraySalas.length + 1];
+					for (int j = 0; j < arraySalas.length; j++) {
+						salaNuevo[j] = arraySalas[j];
+					}
+					salaNuevo[arraySalas.length] = sala;
+					arraySalas = salaNuevo;
+					cine.setId_sala(arraySalas);
+
 				}
-				cineNuevo[cargaCines.length] = cine;
-				cargaCines = cineNuevo;
-
+				Cine[] cineNuevo = new Cine[arrayCine.length + 1];
+				for (int i = 0; i < arrayCine.length; i++) {
+					cineNuevo[i] = arrayCine[i];
+				}
+				cineNuevo[arrayCine.length] = cine;
+				arrayCine = cineNuevo;
 			}
 
 		} catch (Exception e) {
-			System.out.println("error");
+			System.out.println("lol");
 		}
-		return cargaCines;
+		return arrayCine;
 	}
 
-	public Sesion[] arraySesiones() {
-
-		Sesion[] cargaSesiones = new Sesion[0];
-		Connection conexion;
-		try {
-			conexion = DriverManager.getConnection(server, user, pass);
-			Statement sentencia = conexion.createStatement();
-			String sql = "select * from sesiones" + " order by fecha";
-
-			ResultSet resul = sentencia.executeQuery(sql);
-			while (resul.next()) {
-				Sesion sesion = new Sesion();
-				sesion.setId_sesion(resul.getInt("id_sesion"));
-				Sesion[] sesionNueva = new Sesion[cargaSesiones.length + 1];
-				sesion.setFecha(resul.getDate("fecha"));
-				sesion.setHora(resul.getTime("hora"));
-				for (int i = 0; i < cargaSesiones.length; i++) {
-					sesionNueva[i] = cargaSesiones[i];
-				}
-				sesionNueva[cargaSesiones.length] = sesion;
-				cargaSesiones = sesionNueva;
-			}
-		} catch (Exception e) {
-			System.out.println("error");
-		}
-
-		return cargaSesiones;
-
-	}
-
-	public Cliente[] arrayClientes(Cliente cliente) {
+	public Cliente[] arrayClientes() {
 
 		Cliente[] cargaClientes = new Cliente[0];
 		Connection conexion;
@@ -83,20 +176,20 @@ public class metodos {
 		try {
 			conexion = DriverManager.getConnection(server, user, pass);
 			Statement sentencia = conexion.createStatement();
-			String sql = "select * from cliente";
+			String sql = "select * from " + "" +cliente;
 			ResultSet resul = sentencia.executeQuery(sql);
 			while (resul.next()) {
-				cliente = new Cliente();
-				cliente.setApellido(resul.getString("Apellidos"));
-				cliente.setContrasenya(resul.getString("contrasena"));
-				cliente.setDni(resul.getString("dni"));
-				cliente.setNombre(resul.getString("nombre"));
-				cliente.setSexo(resul.getString("sexo"));
+				Cliente clientes = new Cliente();
+				clientes.setApellido(resul.getString(Apellidos));
+				clientes.setContrasenya(resul.getString(contrasena));
+				clientes.setDni(resul.getString(dni));
+				clientes.setNombre(resul.getString(nombre));
+				clientes.setSexo(resul.getString(sexo));
 				Cliente[] clienteNueva = new Cliente[cargaClientes.length + 1];
 				for (int i = 0; i < cargaClientes.length; i++) {
 					clienteNueva[i] = cargaClientes[i];
 				}
-				clienteNueva[cargaClientes.length] = cliente;
+				clienteNueva[cargaClientes.length] = clientes;
 				cargaClientes = clienteNueva;
 			}
 
@@ -106,147 +199,62 @@ public class metodos {
 		return cargaClientes;
 	}
 
-	Sala[] guardarCargaSalas;
-	Sesion[] guardarCargaSesion;
-	Pelicula[] guardarCargaPelicula;
-
-	public Pelicula[] sacarPeliculaDelCine(String nombreCineSel, Cine[] cines) {
-		cines = arrayCines();
-		Sala[] cargaSalas = new Sala[0];
-		Sesion[] cargaSesiones = new Sesion[0];
-		Pelicula[] cargaPeliculas = new Pelicula[0];
-		Connection conexion;
-
-		for (int i = 0; i < cines.length; i++) {
-			if (cines[i].getNombreCine().equals(nombreCineSel)) {
-				guardarcine = nombreCineSel;
-				try {
-					conexion = DriverManager.getConnection(server, user, pass);
-					Statement state = conexion.createStatement();
-					guardarIdCine = cines[i].getId_cine();
-					String sql = "select * from salas where salas.id_cine = " + "'" + cines[i].getId_cine() + "'";
-					ResultSet resul = state.executeQuery(sql);
-					while (resul.next()) {
-						Sala sala = new Sala();
-						sala.setId_sala(resul.getInt("id_sala"));
-						sala.setNombreSalas(resul.getString("nombreSalas"));
-						Sala[] salaNuevo = new Sala[cargaSalas.length + 1];
-						for (int j = 0; j < cargaSalas.length; j++) {
-							salaNuevo[j] = cargaSalas[j];
-						}
-						salaNuevo[cargaSalas.length] = sala;
-						cargaSalas = salaNuevo;
-						guardarCargaSalas = cargaSalas;
-					}
-					for (int k = 0; k < cargaSalas.length; k++) {
-						Statement state1 = conexion.createStatement();
-						String sql1 = "select * from sesiones where sesiones.id_sala = " + "'"
-								+ cargaSalas[k].getId_sala() + "'";
-						ResultSet resul1 = state1.executeQuery(sql1);
-						while (resul1.next()) {
-							Sesion sesion = new Sesion();
-							sesion.setFecha(resul1.getDate("fe" + "cha"));
-							sesion.setHora(resul1.getTime("hora"));
-							sesion.setId_sesion(resul1.getInt("id_sesion"));
-							Sesion[] sesionNueva = new Sesion[cargaSesiones.length + 1];
-							for (int l = 0; l < cargaSesiones.length; l++) {
-								sesionNueva[l] = cargaSesiones[l];
-							}
-							sesionNueva[cargaSesiones.length] = sesion;
-							cargaSesiones = sesionNueva;
-							guardarCargaSesion = cargaSesiones;
-						}
-
-					}
-					for (int j = 0; j < cargaSesiones.length; j++) {
-						Statement state2 = conexion.createStatement();
-						String sql2 = "select * from sesiones,peliculas where sesiones.id_pelicula=peliculas.id_pelicula and sesiones.id_sesion = "
-								+ "'" + cargaSesiones[j].getId_sesion() + "'";
-						ResultSet resul2 = state2.executeQuery(sql2);
-						while (resul2.next()) {
-							Pelicula pelicula = new Pelicula();
-							pelicula.setDuracion(resul2.getInt("duracion"));
-							pelicula.setGenero(resul2.getString("genero"));
-							pelicula.setId_pelicula(resul2.getInt("id_pelicula"));
-							pelicula.setNombrePelicula(resul2.getString("nombrePelicula"));
-							pelicula.setPrecio(resul2.getFloat("precio"));
-							Pelicula[] peliNueva = new Pelicula[cargaPeliculas.length + 1];
-							for (int m = 0; m < cargaPeliculas.length; m++) {
-								peliNueva[m] = cargaPeliculas[m];
-							}
-							peliNueva[cargaPeliculas.length] = pelicula;
-							cargaPeliculas = peliNueva;
-							guardarCargaPelicula = cargaPeliculas;
-						}
-					}
-				} catch (Exception ex) {
-					System.out.println("sacarPeliculaDelCine");
-				}
-			}
-		}
-		return cargaPeliculas;
-
-	}
-
-	public String[] sacarFechaPelicula(Cine[] cines, String nomPeliculaSel, String nCineSel) {
+	public String[] sacarFechaPelicula(Cine[] arrayCines, String nomPeliculaSel, String nCineSel) {
 		String fechas = "";
-		cines = arrayCines();
 		String[] fechasA = null;
-
-		for (int i = 0; i < cines.length; i++) {
-			if (cines[i].getNombreCine().equals(nCineSel)) {
-				for (int j = 0; j < guardarCargaSalas.length; j++) {
-					if (guardarCargaPelicula[j].getNombrePelicula().equals(nomPeliculaSel)) {
-						for (int k = 0; k < guardarCargaSesion.length; k++) {
-							if (guardarCargaPelicula[k].getNombrePelicula().equals(nomPeliculaSel)) {
-								fechas = fechas + guardarCargaSesion[k].getFecha().toString() + "//";
-								fechasA = fechas.split("//");
-								System.out.println(fechasA);
-							}
-
+		for (int i = 0; i < arrayCines.length; i++) {
+			if (arrayCines[i].getNombreCine().equals(nCineSel)) {
+				for (int j = 0; j < arrayCines[i].getId_sala().length; j++) {
+					for (int k = 0; k < arrayCines[i].getId_sala()[j].getArraySesiones().length; k++) {
+						if (arrayCines[i].getId_sala()[j].getArraySesiones()[k].getPelicula().getNombrePelicula()
+								.equals(nomPeliculaSel)) {
+							fechas = fechas + arrayCines[i].getId_sala()[j].getArraySesiones()[k].getFecha() + "//";
+							fechasA = fechas.split("//");
 						}
 					}
 				}
 			}
 		}
-
 		return fechasA;
-
 	}
-	
-	public String[] sacarHora(String nCineSel, String nomPeliculaSel, String fecha) {
-		
-		Cine[]cines = arrayCines();
-		String resultado="";
-		String[] sesionesA = null;
-		int k=0;
-		
 
-		for(int i = 0; i < cines.length; i++) {
-			if(cines[i].getNombreCine().equals(nCineSel)) {
-				for(int j = 0; j < guardarCargaPelicula.length; j++) {
-					if(guardarCargaPelicula[j].getNombrePelicula().equals(nomPeliculaSel)) {
-						while(k < guardarCargaSesion.length) {
-							if(guardarCargaSesion[k].getFecha().toString().equals(fecha)) {
-								int ID = guardarCargaSesion[k].getId_sesion();
-								for(int y = 0; y < guardarCargaSalas.length; y++) {
-									if(guardarCargaSalas[y].getId_sala()==ID) {
-										resultado=resultado+guardarCargaSesion[k].getHora().toString()+" ";
-										resultado=resultado+"en la: "+guardarCargaSalas[y].getNombreSalas()+" ";
-										resultado=resultado+"Precio: "+guardarCargaPelicula[j].getPrecio()+"//";
-									}
-								}
-								
-							}
-						k++;	
+	public String[] sacarDatosF(String nCineSel, String fecha, Cine[] arrayCines) {
+		String resultado = "";
+		String[] sesionesA = null;
+		for (int i = 0; i < arrayCines.length; i++) {
+			if (arrayCines[i].getNombreCine().equals(nCineSel)) {
+				for (int j = 0; j < arrayCines[i].getId_sala().length; j++) {
+					for (int k = 0; k < arrayCines[i].getId_sala()[j].getArraySesiones().length; k++) {
+						if (arrayCines[i].getId_sala()[j].getArraySesiones()[k].getFecha().toString().equals(fecha)) {
+							resultado = resultado + arrayCines[i].getId_sala()[j].getArraySesiones()[k].getHora() + " ";
+							resultado = resultado + "en la: " + arrayCines[i].getId_sala()[j].getNombreSalas() + " ";
+							resultado = resultado + "Precio: "
+									+ arrayCines[i].getId_sala()[j].getArraySesiones()[k].getPelicula().getPrecio()
+									+ "//";
 						}
-						
 					}
 				}
 			}
 		}
-		
-		sesionesA=resultado.split("//");
+		sesionesA = resultado.split("//");
 		return sesionesA;
 	}
+
+/*	public static boolean validarDNI(String dni) {
+		boolean valido = false;
+		final String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+		if (dni.length() == 9) {
+			int numeroDNI = Integer.parseInt(dni.substring(0, 8));
+			char letraDNI = dni.charAt(8);
+			int resto = numeroDNI % 23;
+			char letraCorrecta = letras.charAt(resto);
+
+			if (letraDNI == letraCorrecta) {
+				valido = true;
+			}
+		}
+		return valido;
+	}
+*/
 }

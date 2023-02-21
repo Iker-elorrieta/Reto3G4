@@ -29,6 +29,7 @@ class SesioneTest {
 	int id_sesion0 = 1;
 	Date fecha;
 	Time hora;
+	Sesion sesion = new Sesion();
 	Sesion sesiones = new Sesion(id_sesion, fecha,hora, peliculas);
 	Sesion sesiones1 = new Sesion(id_sesion, fecha,hora, peliculas);
 	Sesion sesiones2 = null;
@@ -36,11 +37,11 @@ class SesioneTest {
 	@Test
 	void test() {
 		sesiones.setFecha(fecha);
-
 		sesiones.setPelicula(peliculas);
 		sesiones.setId_sesion(id_sesion);
 		sesiones.setHora(hora);
 		assertEquals(sesiones.getFecha(), fecha);
+		
 		assertEquals(sesiones.getHora(), hora);
 		assertEquals(sesiones.getId_sesion(), id_sesion);
 		assertEquals(sesiones.getPelicula(),peliculas);
