@@ -72,6 +72,7 @@ public class VistaCine extends JFrame {
 	String nPeliSel = "";
 	private JTable table;
 
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
