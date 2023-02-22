@@ -3,17 +3,20 @@ package Controlador;
 import java.sql.*;
 import modelo.Cine;
 import modelo.Cliente;
+import modelo.Entrada;
 import modelo.Pelicula;
 import modelo.Sala;
 import modelo.Sesion;
 
 public class metodos {
 
-	final String server = "jdbc:mysql://localhost/reto3bdbb";
+	final String server = "jdbc:mysql://localhost/reto3bd";
 	final String user = "root";
 	final String pass = "";
 	String guardarcine = "";
 	int guardarIdCine = 0;
+	String [][] carrito;
+	int cont=0;
 	// -----------finals de bd--------------//
 	final String cines = "cines";
 	final String id_cine = "id_cine";
@@ -237,6 +240,7 @@ public class metodos {
 			}
 		}
 		sesionesA = resultado.split("//");
+		
 		return sesionesA;
 	}
 
@@ -257,4 +261,31 @@ public class metodos {
 		return valido;
 	}
 */
+	
+public String [][] compra(String precio, String pelicula, String fecha, String hora, String sala) {
+		
+		String [][] carritoNew=new String [cont+1][5];
+		
+		int i=0;
+		
+		while(i<cont) {
+			carritoNew[i][1]=carrito[i][0];
+			carritoNew[i][2]=carrito[i][1];
+			carritoNew[i][3]=carrito[i][2];
+			carritoNew[i][4]=carrito[i][3];
+			carritoNew[i][5]=carrito[i][4];
+			i++;
+		}
+		carritoNew[i][0]=precio;
+		carritoNew[i][1]=pelicula;
+		carritoNew[i][2]=fecha;
+		carritoNew[i][3]=hora;
+		carritoNew[i][4]=sala;
+		
+		carrito=carritoNew;
+		
+		cont++;
+		
+		return carritoNew;
+	}
 }

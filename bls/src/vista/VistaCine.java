@@ -70,7 +70,8 @@ public class VistaCine extends JFrame {
 	metodos metodos = new metodos();
 	String[] nombresC;
 	String nPeliSel = "";
-	private JTable table;
+	String[][]tablaArray;
+	JTable table;
 
 	
 	public static void main(String[] args) {
@@ -189,6 +190,15 @@ public class VistaCine extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				panelFinalizarSesion.setVisible(true);
 				panelCines.setVisible(false);
+				
+				table = new JTable();
+				
+					table.setModel(new DefaultTableModel(
+							tablaArray,
+							new String[] { "Precio", "Pelicula", "Fecha", "Hora", "Sala" }));
+				
+				table.setBounds(0, 0, 1, 1);
+				scrollPane.setViewportView(table);
 			
 			}
 		});
@@ -279,7 +289,15 @@ public class VistaCine extends JFrame {
 		btnfinalizarSesion = new JButton("finalizar");
 		btnfinalizarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				String[]split=comboBoxAceptarSesion.getSelectedItem().toString().split(" ");
+				String precio=split[6];
+				String pelicula=comboBoxNombrePelicula.getSelectedItem().toString();
+				String fecha=comboBoxAceptarFecha.getSelectedItem().toString();
+				String hora=split[0];
+				String sala=split[3]+" "+split[4];
+				tablaArray = metodos.compra(precio,pelicula,fecha,hora,sala);
+				
 				comboBoxNombrePelicula.removeAllItems();
 				comboBoxAceptarFecha.removeAllItems();
 				comboBoxAceptarSesion.removeAllItems();
@@ -303,6 +321,7 @@ public class VistaCine extends JFrame {
 				comboBoxAceptarSesion.removeAllItems();
 				
 				btnfinalizarSesion.setVisible(false);
+				
 				
 			}
 		});
@@ -335,12 +354,8 @@ public class VistaCine extends JFrame {
 		scrollPane.setBounds(90, 50, 300, 130);
 		panelFinalizarSesion.add(scrollPane);
 
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { "null", "7.5", "sherk", "telacreiste wey", "sala principal" } },
-				new String[] { "Cliente", "Precio", "pelicula", "Entrada", "Sala" }));
-		table.setBounds(0, 0, 1, 1);
-		scrollPane.setViewportView(table);
+	
+	
 
 	}
 }
