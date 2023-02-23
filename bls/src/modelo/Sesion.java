@@ -16,7 +16,7 @@ public class Sesion {
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 		formatoFecha.format(cal.getTime());
 		fecha = cal.getTime();
-	
+
 		this.id_sesion = id_sesion;
 		this.fecha = fecha;
 		this.pelicula = pelicula;
@@ -24,7 +24,7 @@ public class Sesion {
 	};
 
 	public Sesion() {
-		// TODO Auto-generated constructor stub
+// TODO Auto-generated constructor stub
 	}
 
 	public int getId_sesion() {
@@ -70,9 +70,10 @@ public class Sesion {
 	}
 
 	public Time getHora() {
-	
+
 		return hora;
 	}
+
 	public void setHora(Time hora) {
 		this.hora = hora;
 	}

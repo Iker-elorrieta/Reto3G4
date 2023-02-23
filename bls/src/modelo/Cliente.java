@@ -16,9 +16,6 @@ public class Cliente {
 		this.sexo = sexo;
 		this.contrasenya = contrasenya;
 	}
-
-
-
 	public Cliente() {
 		// TODO Auto-generated constructor stub
 	}

@@ -56,8 +56,8 @@ public class VistaCine extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-
 	int id_sala;
+	
 	String nombreSalas;
 	Sala sala = new Sala();
 	Sesion sesion = new Sesion();
@@ -126,6 +126,7 @@ public class VistaCine extends JFrame {
 		panelBienvenida.setVisible(true);
 		panelBienvenida.add(lblBienvenida);
 
+		
 		JLabel lblPeliculaselec = new JLabel();
 		lblPeliculaselec.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPeliculaselec.setBounds(40, 11, 350, 25);
@@ -220,7 +221,6 @@ public class VistaCine extends JFrame {
 			}
 		});
 		btnLog.setBounds(300, 20, 89, 23);
-
 		panelPeliculas = new JPanel();
 		panelPeliculas.setBounds(0, 0, 436, 263);
 		contentPane.add(panelPeliculas);
