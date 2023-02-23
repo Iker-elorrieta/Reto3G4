@@ -30,6 +30,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 public class VistaCine extends JFrame {
 	/**
@@ -73,6 +75,10 @@ public class VistaCine extends JFrame {
 	String nPeliSel = "";
 	String[][]tablaArray;
 	JTable table;
+	private JTextField textField;
+	private JPasswordField passwordField;
+	private JLabel lblNewLabel;
+	private JLabel lblContrasea;
 
 	
 	public static void main(String[] args) {
@@ -228,8 +234,11 @@ public class VistaCine extends JFrame {
 		JButton btnLog = new JButton("Logearse");
 		btnLog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelCines.setVisible(false);
+				panelFinalizarSesion.setVisible(false);
 				panelLog.setVisible(true);
+				
+				
+				
 
 			}
 		});
@@ -363,14 +372,42 @@ public class VistaCine extends JFrame {
 		});
 		btnatrasborrar.setBounds(20, 20, 89, 23);
 		panelFinalizarSesion.add(btnatrasborrar);
-
+		panelFinalizarSesion.setVisible(false);
+		panelFinalizarSesion.add(btnLog);
+		
 		panelLog = new JPanel();
 		panelLog.setBounds(0, 0, 436, 263);
 		contentPane.add(panelLog);
 		panelLog.setLayout(null);
-		panelFinalizarSesion.setVisible(false);
-		panelFinalizarSesion.add(btnLog);
+		panelLog.setVisible(false);
 		
+		textField = new JTextField();
+		textField.setBounds(134, 93, 223, 20);
+		panelLog.add(textField);
+		textField.setColumns(10);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(134, 124, 223, 20);
+		panelLog.add(passwordField);
+		
+		lblNewLabel = new JLabel("Usuario");
+		lblNewLabel.setBounds(10, 93, 70, 20);
+		panelLog.add(lblNewLabel);
+		
+		lblContrasea = new JLabel("Contraseña");
+		lblContrasea.setBounds(10, 124, 70, 20);
+		panelLog.add(lblContrasea);
+		
+		JButton btnLog1 = new JButton("Confirmar");
+		btnLog1.setBounds(55, 206, 111, 20);
+		panelLog.add(btnLog1);
+		btnLog1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+			}
+		});
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(90, 50, 300, 130);
