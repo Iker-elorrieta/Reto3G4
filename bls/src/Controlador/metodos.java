@@ -269,11 +269,11 @@ public String [][] compra(String precio, String pelicula, String fecha, String h
 		int i=0;
 		
 		while(i<cont) {
-			carritoNew[i][1]=carrito[i][0];
-			carritoNew[i][2]=carrito[i][1];
-			carritoNew[i][3]=carrito[i][2];
-			carritoNew[i][4]=carrito[i][3];
-			carritoNew[i][5]=carrito[i][4];
+			carritoNew[i][0]=carrito[i][0];
+			carritoNew[i][1]=carrito[i][1];
+			carritoNew[i][2]=carrito[i][2];
+			carritoNew[i][3]=carrito[i][3];
+			carritoNew[i][4]=carrito[i][4];
 			i++;
 		}
 		carritoNew[i][0]=precio;
@@ -281,6 +281,8 @@ public String [][] compra(String precio, String pelicula, String fecha, String h
 		carritoNew[i][2]=fecha;
 		carritoNew[i][3]=hora;
 		carritoNew[i][4]=sala;
+		
+		
 		
 		carrito=carritoNew;
 		

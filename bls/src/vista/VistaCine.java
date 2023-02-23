@@ -40,6 +40,7 @@ public class VistaCine extends JFrame {
 	private JLabel lblBienvenida;
 	private JPanel panelCines, panelBienvenida, panelPeliculas, panelSesion;
 	private JLabel lblCines;
+	private JLabel lblPT;
 	private JLabel lblPelicula;
 	JScrollPane scrollPane;
 	private JComboBox<String> comboBoxNombrePelicula, comboBoxAceptarFecha, comboBoxAceptarSesion, comboBoxNombreCine;
@@ -191,6 +192,17 @@ public class VistaCine extends JFrame {
 				panelFinalizarSesion.setVisible(true);
 				panelCines.setVisible(false);
 				
+				float precioTotal=0;
+				
+				int i=0;
+				
+				if(tablaArray!=null) {
+					while( i<tablaArray.length) {
+						precioTotal=precioTotal+Float.parseFloat(tablaArray[i][0]);
+						i++;
+					}
+				}
+				
 				table = new JTable();
 				
 					table.setModel(new DefaultTableModel(
@@ -199,7 +211,15 @@ public class VistaCine extends JFrame {
 				
 				table.setBounds(0, 0, 1, 1);
 				scrollPane.setViewportView(table);
-			
+				
+				
+				panelFinalizarSesion.remove(lblPT);
+				lblPT = new JLabel();
+				lblPT.setText("Precio total: "+precioTotal+"€");
+				lblPT.setFont(new Font("Tahoma", Font.BOLD,12));
+				lblPT.setBounds(36, 200, 336, 51);
+				panelFinalizarSesion.add(lblPT);
+				
 			}
 		});
 		btnfinalizarCompra.setBounds(30, 190, 150, 23);
@@ -332,6 +352,7 @@ public class VistaCine extends JFrame {
 		panelFinalizarSesion.setBounds(0, 0, 436, 263);
 		contentPane.add(panelFinalizarSesion);
 		panelFinalizarSesion.setLayout(null);
+		lblPT = new JLabel();
 
 		btnatrasborrar = new JButton("Atras");
 		btnatrasborrar.addActionListener(new ActionListener() {
@@ -349,6 +370,7 @@ public class VistaCine extends JFrame {
 		panelLog.setLayout(null);
 		panelFinalizarSesion.setVisible(false);
 		panelFinalizarSesion.add(btnLog);
+		
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(90, 50, 300, 130);
