@@ -13,7 +13,7 @@ class ClienteTest {
 	String dni="21";
 	String nombre="1";
 	String apellido="21";
-	char sexo='h';
+	String sexo="h";
 	String contrasenya="12";
 	Cliente cliente = new Cliente (dni,nombre,apellido,sexo,contrasenya);
 	Cliente cliente1 = new Cliente (dni,nombre,apellido,sexo,contrasenya);
@@ -29,7 +29,6 @@ class ClienteTest {
 		cliente.setNombre(nombre);
 		assertEquals(cliente.getApellido(),apellido);
 		assertEquals(cliente.getDni(),dni);
-
 		assertEquals(cliente.getContrasenya(),contrasenya);
 		assertEquals(cliente.getNombre(),nombre);
 		assertEquals(cliente.getSexo(),sexo);

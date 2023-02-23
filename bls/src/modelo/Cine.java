@@ -12,6 +12,9 @@ public class Cine {
 		this.nombreCine = nombreCine;
 		this.arraySalas = arraySalas;
 	}
+	public Cine() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getId_cine() {
 		return id_cine;
@@ -36,8 +39,6 @@ public class Cine {
 	public void setId_sala(Sala[] arraySalas) {
 		this.arraySalas = arraySalas;
 	}
-
-
 	
 	@Override
 	public String toString() {

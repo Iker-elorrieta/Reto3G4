@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
+import java.sql.Time;
 
 
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import modelo.Pelicula;
 import modelo.Sesion;
 
-class SesionesTest {
+class SesioneTest {
 	int id_pelicula = 2;
 	int id_pelicula0 = 1;
 	String nombrePelicula = "12";
@@ -27,18 +28,21 @@ class SesionesTest {
 	int id_sesion = 0;
 	int id_sesion0 = 1;
 	Date fecha;
-	Sesion sesiones = new Sesion(id_sesion, fecha,  peliculas);
-	Sesion sesiones1 = new Sesion(id_sesion, fecha,  peliculas);
+	Time hora;
+	Sesion sesion = new Sesion();
+	Sesion sesiones = new Sesion(id_sesion, fecha,hora, peliculas);
+	Sesion sesiones1 = new Sesion(id_sesion, fecha,hora, peliculas);
 	Sesion sesiones2 = null;
-	Sesion sesiones3 = new Sesion(id_sesion0, fecha, peliculas);
-	
+	Sesion sesiones3 = new Sesion(id_sesion0, fecha,hora, peliculas);
 	@Test
 	void test() {
 		sesiones.setFecha(fecha);
-
 		sesiones.setPelicula(peliculas);
 		sesiones.setId_sesion(id_sesion);
+		sesiones.setHora(hora);
 		assertEquals(sesiones.getFecha(), fecha);
+		
+		assertEquals(sesiones.getHora(), hora);
 		assertEquals(sesiones.getId_sesion(), id_sesion);
 		assertEquals(sesiones.getPelicula(),peliculas);
 		assertEquals(sesiones.toString(), "Sesiones [id_sesion=" + id_sesion + ", fecha=" + fecha 
@@ -49,5 +53,5 @@ class SesionesTest {
 		assertFalse(sesiones.equals(sesiones3));
 		assertFalse(sesiones.equals(sesiones.getClass()));
 	}
-
+	
 }

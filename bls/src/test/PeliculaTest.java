@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.Test;
 import modelo.Pelicula;
 
-class PeliculasTest {
+class PeliculaTest {
 	 int id_pelicula=2;
 	 int id_pelicula0=1;
 	 String nombrePelicula="12";

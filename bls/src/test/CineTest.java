@@ -2,10 +2,12 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,7 @@ import modelo.Pelicula;
 import modelo.Sala;
 import modelo.Sesion;
 
-class CinesTest {
+class CineTest {
 	int id_pelicula = 2;
 	int id_pelicula0 = 1;
 	String nombrePelicula = "12";
@@ -27,7 +29,8 @@ class CinesTest {
 	int id_sesion = 0;
 	int id_sesion0 = 1;
 	Date fecha;
-	Sesion sesiones = new Sesion(id_sesion, fecha, peliculas);
+	Time hora;
+	Sesion sesiones = new Sesion(id_sesion, fecha,hora, peliculas);
 
 	int id_sala = 9;
 	String nombreSalas = "sala1";

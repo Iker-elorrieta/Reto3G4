@@ -16,6 +16,10 @@ public class Pelicula {
 		this.genero = genero;
 	}
 
+	public Pelicula() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId_pelicula() {
 		return id_pelicula;
 	}

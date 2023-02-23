@@ -13,6 +13,10 @@ public class Sala {
 		this.arraySesiones=arraySesiones;
 	}
 	
+	public Sala() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId_sala() {
 		return id_sala;
 	}
@@ -29,8 +33,7 @@ public class Sala {
 	public void setNombreSalas(String nombreSalas) {
 		this.nombreSalas = nombreSalas;
 	}
-
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -42,8 +45,6 @@ public class Sala {
 		Sala other = (Sala) obj;
 		return id_sala == other.id_sala;
 	}
-
-
 	public Sesion[] getArraySesiones() {
 		return arraySesiones;
 	}
@@ -56,6 +57,5 @@ public class Sala {
 	public String toString() {
 		return "Salas [id_sala=" + id_sala + ", nombreSalas=" + nombreSalas +  ", arraySesiones=" + Arrays.toString(arraySesiones) + "]";
 	}
-	
 
 }
