@@ -189,6 +189,7 @@ insert into Sesiones values (64,'2023-04-03','10:00',5,8);
 
 insert into Cliente values (12345678,'Juan','Mano Calva','H','12345');
 insert into Cliente values (87654321,'Manoli','Garcia Guti','F','54321');
+insert into Cliente values (79438343Z,'rene','aguilar','F','1234');
 
 insert into Pedido values(null,12345678,15);
 insert into Pedido values(null,87654321,15);
