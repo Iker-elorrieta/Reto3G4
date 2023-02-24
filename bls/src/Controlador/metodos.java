@@ -1,5 +1,9 @@
 package Controlador;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,20 +12,22 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
+
 import java.util.Date;
 
 import modelo.Cine;
 import modelo.Cliente;
+import modelo.Entrada;
 import modelo.Pelicula;
 import modelo.Sala;
 import modelo.Sesion;
 
 public class metodos {
-
-	final String server = "jdbc:mysql://localhost/reto3bdbb";
+	final String server = "jdbc:mysql://localhost/reto35";
 	final String user = "root";
 	final String pass = "";
-
 // -----------finals de bd--------------//
 	final String cines = "cines";
 	final String id_cine = "id_cine";
@@ -49,8 +55,15 @@ public class metodos {
 	final String sesiones_id_pelicula = "sesiones.id_pelicula";
 	final String peliculas_id_pelicula = "peliculas.id_pelicula";
 	final String sesiones_id_sesion = "sesiones.id_sesion";
-
+	final String entrada = "entrada";
+	final String id_entrada = "id_entrada";
+	final String id_pedido = "id_pedido";
+	final String pedido = "pedido";
+	final String precioTotal = "precioTotal";
 // ---------------------------------------------//
+	String[][] carrito = null;
+	int cont = 0;
+
 	public String[] mostrarCines(Cine[] arrayCines) {
 		String[] nCines = null;
 		String gCines = "";
@@ -159,13 +172,13 @@ public class metodos {
 							 *
 							 * repetido = true; break; } }
 							 */
-// if (!repetido) {
+							// if (!repetido) {
 							Pelicula[] peliNueva = new Pelicula[arrayPeliculas.length + 1];
 							peliNueva[arrayPeliculas.length] = pelicula;
 							arrayPeliculas = peliNueva;
 							sesion.setPelicula(pelicula);
 
-// }
+							// }
 						}
 
 						Sesion[] sesionNueva = new Sesion[arraySesion.length + 1];
@@ -317,59 +330,192 @@ public class metodos {
 		}
 		return precio;
 	}
-	/*
-	 * public Sesion sesionRealizada(Cine[] datos, String nCineSel, String nSala,
-	 * String nPeliSel, String fechaSel, String horaSel) {
-	 *
-	 * Sesion sesionHecha = new Sesion(); Sesion[] gSesion = new Sesion[0]; for (int
-	 * i = 0; i < datos.length; i++) { if
-	 * (nCineSel.equals(datos[i].getNombreCine())) { for (int j = 0; j <
-	 * datos[i].getId_sala().length; j++) { for (int k = 0; k <
-	 * datos[i].getId_sala()[j].getArraySesiones().length; k++) { if
-	 * (datos[i].getId_sala()[j].getArraySesiones()[k].getPelicula().
-	 * getNombrePelicula() .equals(nPeliSel)) { Sesion[] arraySesion = new
-	 * Sesion[gSesion.length + 1]; for (int p = 0; p < gSesion.length; p++) {
-	 * arraySesion[p] = gSesion[p]; } arraySesion[gSesion.length] =
-	 * datos[i].getId_sala()[j].getArraySesiones()[k]; gSesion = arraySesion; } } }
-	 * }
-	 *
-	 * }
-	 */
-	/*
-	 * Sesion[] gSesion2 = new Sesion[0]; for (int i = 0; i < gSesion.length; i++) {
-	 * if (gSesion[i].getFecha().toString().equals(fechaSel)) { Sesion[] arraySesion
-	 * = new Sesion[gSesion2.length + 1]; for (int p = 0; p < gSesion2.length; p++)
-	 * { arraySesion[p] = gSesion2[p]; } arraySesion[gSesion2.length] = gSesion[i];
-	 * gSesion2 = arraySesion; } } for (int i = 0; i < gSesion2.length; i++) { if
-	 * (gSesion2[i].getHora().toString().equals(horaSel)) { sesionHecha =
-	 * gSesion2[i]; } } return sesionHecha;
-	 */
+
+	public String[][] tablaResumen(String precio, String pelicula, String fecha, String hora, String sala,
+			String cine) {
+
+		String[][] carritoNew = new String[cont + 1][6];
+
+		int i = 0;
+
+		while (i < cont) {
+			carritoNew[i][0] = carrito[i][0];
+			carritoNew[i][1] = carrito[i][1];
+			carritoNew[i][2] = carrito[i][2];
+			carritoNew[i][3] = carrito[i][3];
+			carritoNew[i][4] = carrito[i][4];
+			carritoNew[i][5] = carrito[i][5];
+			i++;
+		}
+		carritoNew[i][0] = cine;
+		carritoNew[i][1] = sala;
+		carritoNew[i][2] = pelicula;
+		carritoNew[i][3] = precio;
+		carritoNew[i][4] = fecha;
+		carritoNew[i][5] = hora;
+
+		carrito = carritoNew;
+
+		cont++;
+
+		return carritoNew;
+	}
+
+	public Sesion sesionRealizada(Cine[] datos, String nCineSel, String nSala, String nPeliSel, String fechaSel,
+			String horaSel) {
+
+		Sesion sesionHecha = new Sesion();
+		Sesion[] gSesion = new Sesion[0];
+		for (int i = 0; i < datos.length; i++) {
+			if (nCineSel.equals(datos[i].getNombreCine())) {
+				for (int j = 0; j < datos[i].getId_sala().length; j++) {
+					for (int k = 0; k < datos[i].getId_sala()[j].getArraySesiones().length; k++) {
+						if (datos[i].getId_sala()[j].getArraySesiones()[k].getPelicula().getNombrePelicula()
+								.equals(nPeliSel)) {
+							Sesion[] arraySesion = new Sesion[gSesion.length + 1];
+							for (int p = 0; p < gSesion.length; p++) {
+								arraySesion[p] = gSesion[p];
+							}
+							arraySesion[gSesion.length] = datos[i].getId_sala()[j].getArraySesiones()[k];
+							gSesion = arraySesion;
+						}
+					}
+				}
+			}
+
+		}
+		Sesion[] gSesion2 = new Sesion[0];
+		for (int i = 0; i < gSesion.length; i++) {
+			if (gSesion[i].getFecha().toString().equals(fechaSel)) {
+				Sesion[] arraySesion = new Sesion[gSesion2.length + 1];
+				for (int p = 0; p < gSesion2.length; p++) {
+					arraySesion[p] = gSesion2[p];
+				}
+				arraySesion[gSesion2.length] = gSesion[i];
+				gSesion2 = arraySesion;
+			}
+		}
+		for (int i = 0; i < gSesion2.length; i++) {
+			if (gSesion2[i].getHora().toString().equals(horaSel)) {
+				sesionHecha = gSesion2[i];
+			}
+		}
+		return sesionHecha;
+	}
+
+	public Entrada añadirEntradas(Sesion sesionHecha, Entrada entrada) {
+
+		entrada.setEntradaSesion(sesionHecha);
+		return entrada;
+	}
+
+	public boolean validarDNI(String dni) {
+		boolean valido = false;
+		final String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+		if (dni.length() == 9) {
+			int numeroDNI = Integer.parseInt(dni.substring(0, 8));
+			char letraDNI = dni.charAt(8);
+			int resto = numeroDNI % 23;
+			char letraCorrecta = letras.charAt(resto);
+
+			if (letraDNI == letraCorrecta) {
+				valido = true;
+			}
+		}
+		return valido;
+	}
+
+	public boolean usuarioRegistrado(String dni) {
+		Cliente[] usuarios = arrayClientes();
+		boolean exist = false;
+		for (int i = 0; i < usuarios.length; i++) {
+			if (usuarios[i].getDni().equals(dni)) {
+				exist = true;
+			}
+		}
+		return exist;
+	}
+
+	public void añadirCliente(String nombre, String apellido, String dni, String contra, String sexo) {
+		// TODO Auto-generated method stub
+		try {
+			Connection conexion;
+			conexion = DriverManager.getConnection(server, user, pass);
+			Statement st = conexion.createStatement();
+			st.executeUpdate("INSERT INTO " + cliente + "(" + this.dni + "," + this.nombre + "," + this.Apellidos + ","
+					+ this.sexo + "," + this.contrasena + ")" + " VALUES (" + "'" + dni + "', '" + nombre + "', '"
+					+ apellido + "','" + sexo + "','" + contra + "')");
+
+		} catch (Exception e) {
+			System.out.println("error");
+			System.err.println(e.getMessage());
+		}
+	}
+
+	/*public void añadirPedidoBD(Entrada[] array, String dni3, float precioTotal1) {
+
+		try {
+			Connection conexion;
+			conexion = DriverManager.getConnection(server, user, pass);
+			Statement st = conexion.createStatement();
+			for (int i = 0; i < array.length; i++) {
+				st.executeUpdate("INSERT INTO " + pedido + "(" + null + "," + dni + "," + precioTotal + ")"
+						+ " VALUES (" + "'" + null + "', '" + dni3 + "', '" + precioTotal1 + "')");
+				st.executeUpdate("INSERT INTO " + entrada + "(" + null + "," + dni + "," + precioTotal + ")"
+						+ " VALUES (" + "'" + null + "', '" + dni3 + "', '" + precioTotal1 + "')");
+
+			}
+		} catch (Exception e) {
+			System.out.println("error");
+			System.err.println(e.getMessage());
+		}
+	}*/
+
+	public float hacerDescuento(Entrada[] gEntrada, float precioTotal) {
+		int cont = 0;
+		for (int i = 0; i < gEntrada.length; i++) {
+			cont++;
+		}
+		float precioTotalConDescuento;
+		if (cont == 2) {
+			precioTotalConDescuento = precioTotal * 0.8f;
+		} else if (cont == 1) {
+			precioTotalConDescuento = precioTotal * 1;
+		} else if (cont == 3) {
+			precioTotalConDescuento = precioTotal * 0.7f;
+		} else if (cont == 4) {
+			precioTotalConDescuento = precioTotal * 0.6f;
+		} else { // cantidad >= 5
+			precioTotalConDescuento = precioTotal * 0.5f;
+		}
+
+		return precioTotalConDescuento;
+	}
+
+	public void AnadirFactura(Entrada[] entrada, String sala, String fecha, String hora, String cineSel,
+			float precioTotal, String dni) {
+		File file = new File("factura.txt");
+		BufferedWriter fichero;
+		String nomPeli = "";
+		try {
+			file.delete();
+			fichero = new BufferedWriter(new FileWriter(file));
+			for (int i = 0; i < entrada.length; i++) {
+				nomPeli = entrada[i].getEntradaSesion().getPelicula().getNombrePelicula();
+			}
+
+			fichero.write("Datos Ticket :> Cine: " + cineSel + ", Sala :" + sala + " pelicula: " + nomPeli + " ,DNI : "
+					+ dni + ", " + " ,fecha: " + fecha + " ,hora:" + hora + ",precio total = " + precioTotal + "\n");
+
+			fichero.close();
+			JOptionPane.showMessageDialog(null, "La factura ha sido guardada correctamente");
+
+		} catch (
+
+		IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
 }
-
-/*
- * public Entrada[] añadirEntradas(Sesion sesionHecha, int id_entrada,
- * Entrada[]arrayEntradas) { Entrada entrada = new Entrada();
- * entrada.setId_entrada(id_entrada); entrada.setEntradaSesion(sesionHecha);
- * Entrada [] entradas = new Entrada[arrayEntradas.length+1]; for(int
- * i=0;i<arrayEntradas.length;i++) { entradas[i]=arrayEntradas[i]; }
- * entradas[arrayEntradas.length]=entrada; arrayEntradas=entradas; return
- * arrayEntradas; }
- */
-
-/*
- * public int contSesiones(Cine[] datos) { int cont = 0; for (int i = 0; i <
- * datos.length; i++) { for (int j = 0; j < datos[i].getId_sala().length; j++) {
- * for (int k = 0; k < datos[i].getId_sala()[j].getArraySesiones().length; j++)
- * { cont++; } } } return cont; }
- */
-
-/*
- * public static boolean validarDNI(String dni) { boolean valido = false; final
- * String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
- *
- * if (dni.length() == 9) { int numeroDNI = Integer.parseInt(dni.substring(0,
- * 8)); char letraDNI = dni.charAt(8); int resto = numeroDNI % 23; char
- * letraCorrecta = letras.charAt(resto);
- *
- * if (letraDNI == letraCorrecta) { valido = true; } } return valido; }
- */
